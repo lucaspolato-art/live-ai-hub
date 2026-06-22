@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ℓiⱴε · Prompt Bank</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --yellow: #f2ff00;
+    --black: #0a0a0a;
+    --gray: #1a1a1a;
+    --gray2: #2a2a2a;
+    --gray3: #444;
+    --white: #f5f5f5;
+    --white2: #cccccc;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--black); color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.6; }
+
+  /* TICKER */
+  .ticker { background: var(--yellow); overflow: hidden; padding: 8px 0; }
+  .ticker-inner { display: flex; animation: tick 28s linear infinite; white-space: nowrap; }
+  .ticker-inner span { font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; color: var(--black); text-transform: uppercase; letter-spacing: 0.12em; padding: 0 28px; }
+  .ticker-inner span::after { content: '×'; margin-left: 28px; opacity: 0.35; }
+  @keyframes tick { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+  /* HEADER */
+  header { padding: 28px 40px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--gray2); position: sticky; top: 0; background: var(--black); z-index: 50; }
+  .logo { font-family: 'Space Mono', monospace; font-size: 20px; color: var(--yellow); letter-spacing: -0.02em; }
+  .header-title { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--gray3); text-transform: uppercase; letter-spacing: 0.15em; }
+  .header-actions { display: flex; gap: 10px; align-items: center; }
+  .btn-contribute { font-family: 'Space Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; padding: 8px 16px; background: var(--yellow); color: var(--black); border: none; cursor: pointer; font-weight: 700; text-decoration: none; transition: opacity .2s; }
+  .btn-contribute:hover { opacity: .85; }
+  .btn-export { font-family: 'Space Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; padding: 8px 14px; background: transparent; color: var(--white2); border: 1px solid var(--gray3); cursor: pointer; transition: all .2s; }
+  .btn-export:hover { border-color: var(--yellow); color: var(--yellow); }
+
+  /* FILTROS */
+  .controls { padding: 24px 40px; border-bottom: 1px solid var(--gray2); display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .search-wrap { flex: 1; min-width: 240px; position: relative; }
+  .search-wrap input { width: 100%; background: var(--gray); border: 1px solid var(--gray2); color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 14px; padding: 10px 14px 10px 36px; outline: none; transition: border-color .2s; }
+  .search-wrap input:focus { border-color: var(--yellow); }
+  .search-wrap input::placeholder { color: var(--gray3); }
+  .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--gray3); font-size: 14px; }
+  .filter-area { display: flex; gap: 6px; flex-wrap: wrap; }
+  .f-btn { font-family: 'Space Mono', monospace; font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; padding: 6px 12px; background: var(--gray); border: 1px solid var(--gray2); color: var(--white2); cursor: pointer; transition: all .15s; }
+  .f-btn:hover, .f-btn.active { background: var(--yellow); color: var(--black); border-color: var(--yellow); }
+  .count-tag { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--gray3); margin-left: auto; white-space: nowrap; }
+
+  /* GRID */
+  .main { display: grid; grid-template-columns: 1fr; gap: 0; }
+  .prompt-card { border-bottom: 1px solid var(--gray2); padding: 28px 40px; display: grid; grid-template-columns: 1fr auto; gap: 20px; transition: background .15s; cursor: pointer; }
+  .prompt-card:hover { background: var(--gray); }
+  .prompt-card.hidden { display: none; }
+  .card-area { font-family: 'Space Mono', monospace; font-size: 9px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--yellow); margin-bottom: 8px; }
+  .card-problem { font-family: 'Space Mono', monospace; font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 10px; line-height: 1.3; }
+  .card-result { font-size: 13px; color: var(--white2); line-height: 1.5; margin-bottom: 14px; }
+  .card-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tag { font-family: 'Space Mono', monospace; font-size: 9px; padding: 3px 8px; background: var(--gray2); color: var(--gray3); border: 1px solid var(--gray2); text-transform: uppercase; letter-spacing: 0.08em; }
+  .card-meta { font-family: 'Space Mono', monospace; font-size: 9px; color: var(--gray3); margin-top: 12px; }
+  .card-right { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; flex-shrink: 0; }
+  .stars { color: var(--yellow); font-size: 12px; letter-spacing: 2px; }
+  .btn-copy { font-family: 'Space Mono', monospace; font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; padding: 8px 14px; background: transparent; border: 1px solid var(--gray3); color: var(--white2); cursor: pointer; transition: all .15s; white-space: nowrap; }
+  .btn-copy:hover { border-color: var(--yellow); color: var(--yellow); }
+  .btn-copy.copied { background: var(--yellow); color: var(--black); border-color: var(--yellow); }
+
+  /* EMPTY */
+  .empty { padding: 80px 40px; text-align: center; display: none; }
+  .empty-title { font-family: 'Space Mono', monospace; font-size: 18px; color: var(--gray3); margin-bottom: 12px; }
+  .empty-sub { font-size: 14px; color: var(--gray3); }
+
+  /* MODAL PROMPT */
+  .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.9); z-index: 999; align-items: center; justify-content: center; padding: 24px; }
+  .modal.open { display: flex; }
+  .modal-box { background: var(--gray); border: 1px solid var(--gray2); border-top: 2px solid var(--yellow); max-width: 700px; width: 100%; max-height: 88vh; overflow-y: auto; padding: 40px; position: relative; }
+  .modal-close { position: absolute; top: 16px; right: 20px; background: none; border: none; color: var(--white2); font-size: 18px; cursor: pointer; font-family: 'Space Mono', monospace; }
+  .modal-area { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--yellow); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 8px; }
+  .modal-title { font-family: 'Space Mono', monospace; font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 20px; line-height: 1.3; }
+  .modal-label { font-family: 'Space Mono', monospace; font-size: 9px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--gray3); margin-bottom: 8px; }
+  .modal-result { font-size: 14px; color: var(--white2); line-height: 1.6; margin-bottom: 24px; padding: 16px; background: var(--gray2); border-left: 2px solid var(--yellow); }
+  .modal-prompt-box { background: var(--black); border: 1px solid var(--gray2); padding: 20px; margin-bottom: 20px; font-family: 'Space Mono', monospace; font-size: 12px; color: var(--white2); line-height: 1.7; white-space: pre-wrap; word-break: break-word; }
+  .modal-actions { display: flex; gap: 10px; }
+  .modal-btn-copy { font-family: 'Space Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; padding: 12px 20px; background: var(--yellow); color: var(--black); border: none; cursor: pointer; font-weight: 700; transition: opacity .2s; flex: 1; }
+  .modal-btn-copy:hover { opacity: .85; }
+  .modal-btn-copy.copied { background: #4caf50; color: var(--white); }
+  .modal-btn-slack { font-family: 'Space Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; padding: 12px 20px; background: transparent; color: var(--white2); border: 1px solid var(--gray3); cursor: pointer; transition: all .2s; text-decoration: none; display: flex; align-items: center; justify-content: center; }
+  .modal-btn-slack:hover { border-color: var(--yellow); color: var(--yellow); }
+
+  /* CONTRIBUTE DRAWER */
+  .contribute-banner { background: var(--gray); border-top: 1px solid var(--gray2); padding: 24px 40px; display: flex; align-items: center; gap: 20px; }
+  .contribute-text { flex: 1; }
+  .contribute-text strong { font-family: 'Space Mono', monospace; font-size: 12px; color: var(--yellow); display: block; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.1em; }
+  .contribute-text span { font-size: 13px; color: var(--white2); }
+  .contribute-format { background: var(--black); border: 1px solid var(--gray2); padding: 16px 20px; font-family: 'Space Mono', monospace; font-size: 11px; color: var(--white2); line-height: 1.8; flex: 1; min-width: 280px; }
+
+  /* FOOTER */
+  footer { padding: 24px 40px; border-top: 1px solid var(--gray2); display: flex; justify-content: space-between; align-items: center; }
+  .footer-logo { font-family: 'Space Mono', monospace; font-size: 16px; color: var(--yellow); }
+  .footer-meta { font-family: 'Space Mono', monospace; font-size: 9px; color: var(--gray3); text-transform: uppercase; letter-spacing: 0.1em; text-align: right; }
+
+  @media(max-width:700px) {
+    header { flex-wrap: wrap; gap: 12px; padding: 20px; }
+    .controls { padding: 16px 20px; }
+    .prompt-card { padding: 20px; grid-template-columns: 1fr; }
+    .card-right { flex-direction: row; align-items: center; }
+    .modal-box { padding: 24px; }
+    .contribute-banner { flex-direction: column; padding: 20px; }
+    footer { flex-direction: column; gap: 10px; padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span>Prompt Bank</span><span>ℓiⱴε × IA</span><span>Conhecimento Coletivo</span><span>Copie · Use · Contribua</span>
+    <span>Prompt Bank</span><span>ℓiⱴε × IA</span><span>Conhecimento Coletivo</span><span>Copie · Use · Contribua</span>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div>
+    <div class="logo">ℓiⱴε</div>
+    <div class="header-title">Prompt Bank · Comitê de IA</div>
+  </div>
+  <div class="header-actions">
+    <button class="btn-export" onclick="exportCSV()">↓ Exportar CSV</button>
+    <a class="btn-contribute" href="https://docs.google.com/forms/d/e/1FAIpQLSdOxxBxywSf-2Gq9AjffFRpv0C8sDUdgbBirYWOQsDnitRMTg/viewform" target="_blank">+ Contribuir com prompt</a>
+  </div>
+</header>
+
+<!-- CONTROLES -->
+<div class="controls">
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="Buscar por problema, área ou tag..." oninput="filterPrompts()">
+  </div>
+  <div class="filter-area" id="areaFilters">
+    <button class="f-btn active" data-area="todos" onclick="setArea('todos', this)">Todos</button>
+    <button class="f-btn" data-area="Atendimento" onclick="setArea('Atendimento', this)">📣 Atendimento</button>
+    <button class="f-btn" data-area="Criação" onclick="setArea('Criação', this)">🎨 Criação</button>
+    <button class="f-btn" data-area="Social Media" onclick="setArea('Social Media', this)">📱 Social</button>
+    <button class="f-btn" data-area="Mídia" onclick="setArea('Mídia', this)">📡 Mídia</button>
+    <button class="f-btn" data-area="BI & Insights" onclick="setArea('BI & Insights', this)">📊 BI</button>
+    <button class="f-btn" data-area="Influenciadores" onclick="setArea('Influenciadores', this)">🌟 Influências</button>
+    <button class="f-btn" data-area="Operações" onclick="setArea('Operações', this)">⚙️ Ops</button>
+    <button class="f-btn" data-area="Projetos" onclick="setArea('Projetos', this)">📁 Projetos</button>
+    <button class="f-btn" data-area="Back Office" onclick="setArea('Back Office', this)">🏢 Back Office</button>
+  </div>
+  <div class="count-tag" id="countTag">— prompts</div>
+</div>
+
+<!-- LISTA DE PROMPTS -->
+<div class="main" id="promptList"></div>
+<div class="empty" id="emptyState">
+  <div class="empty-title">Nenhum prompt encontrado</div>
+  <div class="empty-sub">Tente outro termo ou área — ou seja o primeiro a contribuir aqui.</div>
+</div>
+
+<!-- COMO CONTRIBUIR -->
+<div class="contribute-banner">
+  <div class="contribute-text">
+    <strong>Quer adicionar um prompt?</strong>
+    <span>Use, teste, e se funcionou — compartilhe no <strong>#ai-prompts</strong> no Slack com o formato ao lado. A cada Lab Session quinzenal os melhores entram no banco.</span>
+  </div>
+  <div class="contribute-format">
+ÁREA: [Atendimento / Criação / Social / ...]
+PROBLEMA: [O que você precisava resolver]
+PROMPT:
+---
+[Cole o prompt aqui]
+---
+RESULTADO: [O que funcionou bem]</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">ℓiⱴε</div>
+  <div class="footer-meta">Comitê de IA · 2026<br>Atualizado quinzenalmente</div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal" id="promptModal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-area" id="m-area"></div>
+    <div class="modal-title" id="m-title"></div>
+    <div class="modal-label">Por que funciona</div>
+    <div class="modal-result" id="m-result"></div>
+    <div class="modal-label">Prompt — copie e adapte os campos entre [ ]</div>
+    <div class="modal-prompt-box" id="m-prompt"></div>
+    <div class="modal-actions">
+      <button class="modal-btn-copy" id="m-copy-btn" onclick="copyPrompt()">Copiar prompt</button>
+      <a class="modal-btn-slack" href="https://livetheagency.slack.com/channels/ai-prompts" target="_blank">Compartilhar no Slack #ai-prompts ↗</a>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── DADOS DO BANCO ────────────────────────────────────────────────────────
+// Para adicionar prompts: insira um novo objeto neste array
+// Campos: id, area, problema, prompt, resultado, tags, autor, data, estrelas
+const PROMPTS = [
+  // ── ATENDIMENTO ──────────────────────────────────────────
+  {
+    id: 'atd-001', area: 'Atendimento', estrelas: 5,
+    problema: 'Transformar anotações brutas de reunião em ata estruturada',
+    resultado: 'Gera ata pronta para enviar ao cliente em menos de 2 minutos — sem reescrever nada',
+    prompt: `Você é um assistente de atendimento da agência ℓiⱴε.
+Recebi as seguintes anotações brutas de uma reunião com o cliente [NOME DO CLIENTE]:
+
+[COLE AS ANOTAÇÕES AQUI]
+
+Transforme isso em uma ata profissional com:
+- Data e participantes
+- Resumo executivo (3 linhas)
+- Decisões tomadas (lista com responsável e prazo)
+- Próximos passos numerados com dono e data
+- Pendências do cliente
+
+Tom: profissional mas direto. Sem enrolação.`,
+    tags: ['ata', 'reunião', 'cliente', 'documentação'], autor: 'Polato', data: 'Jun 2026'
+  },
+  {
+    id: 'atd-002', area: 'Atendimento', estrelas: 5,
+    problema: 'Transformar e-mail confuso do cliente em brief operacional',
+    resultado: 'Elimina a reunião de alinhamento interno — o time recebe a demanda já estruturada',
+    prompt: `O cliente enviou o seguinte e-mail/mensagem pedindo uma entrega:
+
+[COLE O E-MAIL DO CLIENTE]
+
+Extrai disso um brief operacional interno com:
+- Objetivo da entrega
+- Formato e especificações técnicas
+- Prazo solicitado
+- Tom e referências mencionadas
+- Pontos de dúvida que precisam de alinhamento (liste as perguntas que você faria)
+
+Se algo estiver ambíguo, sinalize claramente em vez de inventar.`,
+    tags: ['brief', 'cliente', 'alinhamento', 'operacional'], autor: 'Polato', data: 'Jun 2026'
+  },
+  {
+    id: 'atd-003', area: 'Atendimento', estrelas: 4,
+    problema: 'Escrever e-mail de alinhamento pós-reunião',
+    resultado: 'E-mail pronto em 30 segundos, sem o vazio de página em branco',
+    prompt: `Escreva um e-mail de alinhamento para o cliente [NOME] após nossa reunião de hoje.
+Os pontos principais foram:
+
+[LISTE OS PONTOS DECIDIDOS]
+
+O e-mail deve:
+- Ser profissional mas com tom humano (não corporativo)
+- Confirmar o que foi decidido
+- Deixar claro os próximos passos e quem faz o quê
+- Ter no máximo 150 palavras
+- Terminar com uma frase que deixe o cliente tranquilo e animado
+
+Não use frases como 'conforme acordado' ou 'venho por meio deste'.`,
+    tags: ['e-mail', 'cliente', 'pós-reunião', 'comunicação'], autor: 'Polato', data: 'Jun 2026'
+  },
+  // ── CRIAÇÃO ──────────────────────────────────────────────
+  {
+    id: 'cri-001', area: 'Criação', estrelas: 5,
+    problema: 'Gerar primeiros conceitos criativos a partir do brief',
+    resultado: 'Tira o bloqueio da página em branco — dá 3 direções para a equipe escolher e desenvolver',
+    prompt: `Você é um diretor de criação de uma agência culture-driven brasileira.
+Recebi o seguinte brief de campanha:
+
+[COLE O BRIEF]
+
+Gere 3 conceitos criativos distintos, cada um com:
+- Nome do conceito (2-4 palavras)
+- Ideia central em uma frase
+- Como se manifesta (formatos, linguagem, mood)
+- Por que é relevante para a cultura agora
+- Uma referência cultural ou visual que inspira (pode ser filme, música, meme, movimento)
+
+Os conceitos devem ser diferentes entre si em tom, abordagem e público-alvo dentro do brief.
+Seja ousado. A gente revisa depois.`,
+    tags: ['conceito', 'criação', 'brief', 'brainstorm'], autor: 'Polato', data: 'Jun 2026'
+  },
+  {
+    id: 'cri-002', area: 'Criação', estrelas: 4,
+    problema: 'Adaptar copy aprovada para múltiplos formatos',
+    resultado: 'Uma copy vira 6 formatos diferentes sem perder a essência — economiza pelo menos 1h por job',
+    prompt: `Tenho a seguinte copy aprovada pelo cliente para a campanha [NOME DA CAMPANHA]:
+
+[COPY APROVADA]
+
+Adapte para os seguintes formatos mantendo a essência e o tom:
+1. Post feed Instagram (até 150 caracteres + hashtags)
+2. Stories (até 80 caracteres, com CTA)
+3. TikTok/Reels (legenda de 60 caracteres + 3 hashtags)
+4. LinkedIn (versão mais profissional, até 200 caracteres)
+5. Twitter/X (até 240 caracteres)
+6. WhatsApp (tom conversacional, máximo 2 linhas)
+
+Para cada um, indique se precisa de adaptação visual.`,
+    tags: ['copy', 'adaptação', 'formatos', 'social'], autor: 'Polato', data: 'Jun 2026'
+  },
+  // ── SOCIAL MEDIA ─────────────────────────────────────────
+  {
+    id: 'soc-001', area: 'Social Media', estrelas: 5,
+    problema: 'Criar calendário editorial mensal a partir dos pilares do cliente',
+    resultado: 'Calendário de 20 posts em 5 minutos — a equipe foca na produção, não na ideação',
+    prompt: `Crie um calendário editorial para o mês de [MÊS] para o cliente [NOME DO CLIENTE].
+
+Informações do cliente:
+- Segmento: [SEGMENTO]
+- Tom de voz: [TOM]
+- Pilares de conteúdo: [PILARES]
+- Plataformas: [INSTAGRAM / TIKTOK / LINKEDIN / etc]
+- Frequência: [X posts por semana]
+- Datas importantes do mês: [DATAS]
+
+Para cada post inclua:
+- Data e dia da semana
+- Pilar de conteúdo
+- Formato (carrossel, reels, estático, stories)
+- Ideia do post em uma frase
+- CTA sugerido
+
+Formato de saída: tabela organizada por semana.`,
+    tags: ['calendário', 'editorial', 'planejamento', 'social'], autor: 'Polato', data: 'Jun 2026'
+  },
+  {
+    id: 'soc-002', area: 'Social Media', estrelas: 4,
+    problema: 'Analisar sentimento de comentários e gerar relatório',
+    resultado: 'Leitura qualitativa de 100+ comentários em segundos — identifica padrões que o olho humano perde',
+    prompt: `Analise os seguintes comentários de um post do cliente [NOME] no [PLATAFORMA]:
+
+[COLE OS COMENTÁRIOS — pode ser em bloco, um por linha]
+
+Gere um relatório com:
+1. Sentimento geral (% positivo / neutro / negativo)
+2. Principais elogios (top 3 temas)
+3. Principais críticas ou dúvidas (top 3)
+4. Comentários que pedem resposta urgente
+5. Insights sobre o que o público mais gostou/não gostou
+6. Recomendação de conteúdo futuro baseado nos comentários
+
+Seja específico com exemplos dos comentários.`,
+    tags: ['comentários', 'sentimento', 'relatório', 'análise'], autor: 'Polato', data: 'Jun 2026'
+  },
+  // ── BI & INSIGHTS ─────────────────────────────────────────
+  {
+    id: 'bi-001', area: 'BI & Insights', estrelas: 5,
+    problema: 'Transformar dados brutos de campanha em narrativa para o cliente',
+    resultado: 'O dado vira história — apresentação fica pronta sem a parte mais demorada',
+    prompt: `Você é um analista de dados de uma agência de comunicação.
+Recebi os seguintes dados de performance da campanha [NOME] do cliente [CLIENTE]:
+
+[COLE OS DADOS — pode ser tabela, print ou lista de números]
+
+Crie uma narrativa de resultados para apresentar ao cliente com:
+1. Headline de resultado (frase de impacto que resume a campanha)
+2. Performance por canal (comparando com benchmark quando possível)
+3. O que funcionou bem e por quê (análise, não só números)
+4. O que pode melhorar na próxima fase
+5. Próxima recomendação estratégica com justificativa
+
+Tom: confiante, direto, sem esconder problemas. Cliente precisa confiar nos dados.`,
+    tags: ['dados', 'relatório', 'narrativa', 'campanha'], autor: 'Polato', data: 'Jun 2026'
+  },
+  // ── OPERAÇÕES ─────────────────────────────────────────────
+  {
+    id: 'ops-001', area: 'Operações', estrelas: 5,
+    problema: 'Estruturar checklist de entrega por tipo de job',
+    resultado: 'Zero item esquecido — reduz retrabalho e reclamação de cliente por entrega incompleta',
+    prompt: `Crie um checklist de entrega para o seguinte tipo de job: [TIPO — ex: campanha de mídia paga, post de social, produção de vídeo, relatório mensal]
+
+O job é para o cliente [NOME] e envolve as áreas: [ÁREAS ENVOLVIDAS]
+
+O checklist deve ter:
+- Fase de pré-entrega (o que revisar antes de enviar)
+- Itens técnicos obrigatórios por formato
+- Aprovações internas necessárias (quem precisa ver antes do cliente)
+- Pontos de atenção específicos deste cliente (se houver)
+- Confirmação final antes de enviar
+
+Formato: lista de checkboxes organizada por fase.`,
+    tags: ['checklist', 'entrega', 'qualidade', 'processo'], autor: 'Polato', data: 'Jun 2026'
+  },
+  {
+    id: 'ops-002', area: 'Operações', estrelas: 4,
+    problema: 'Redistribuir tarefas urgentes quando alguém da equipe sai',
+    resultado: 'Em 2 minutos você tem um plano de redistribuição — sem pânico, sem esquecimento',
+    prompt: `Preciso redistribuir urgente as tarefas de [NOME DA PESSOA] que [saiu de férias / ficou doente / saiu da empresa].
+
+Tarefas pendentes dela/dele:
+[LISTE AS TAREFAS COM PRAZO]
+
+Time disponível:
+[LISTE AS PESSOAS E SUAS ESPECIALIDADES]
+
+Considerações:
+- Prazo mais crítico: [DATA]
+- O que não pode atrasar de jeito nenhum: [ITEM]
+
+Sugira a redistribuição mais eficiente com justificativa para cada escolha.
+Considere carga de trabalho e competência de cada pessoa.`,
+    tags: ['redistribuição', 'urgência', 'time', 'gestão'], autor: 'Polato', data: 'Jun 2026'
+  },
+  // ── MÍDIA ─────────────────────────────────────────────────
+  {
+    id: 'mid-001', area: 'Mídia', estrelas: 4,
+    problema: 'Criar justificativa de alocação de verba por canal',
+    resultado: 'Cliente entende e aprova o plano de mídia sem questionamentos básicos',
+    prompt: `Escreva uma justificativa executiva para a seguinte alocação de verba do cliente [NOME]:
+
+Budget total: [VALOR]
+Distribuição proposta:
+- [CANAL 1]: [%] — [VALOR]
+- [CANAL 2]: [%] — [VALOR]
+- [CANAL 3]: [%] — [VALOR]
+
+Objetivo da campanha: [OBJETIVO]
+Público-alvo: [PÚBLICO]
+
+A justificativa deve:
+- Explicar o racional de cada alocação em linguagem de negócio (não técnica de mídia)
+- Conectar cada canal com o objetivo e o público
+- Mencionar benchmark de mercado quando relevante
+- Ter tom confiante — somos especialistas
+
+Máximo 300 palavras.`,
+    tags: ['mídia', 'verba', 'justificativa', 'cliente'], autor: 'Polato', data: 'Jun 2026'
+  },
+  // ── INFLUENCIADORES ───────────────────────────────────────
+  {
+    id: 'inf-001', area: 'Influenciadores', estrelas: 4,
+    problema: 'Criar briefing estruturado para creator a partir do escopo da campanha',
+    resultado: 'Creator recebe tudo que precisa — menos ida e volta, entrega mais alinhada',
+    prompt: `Crie um briefing completo para o creator [NOME/PERFIL] para a campanha [NOME] do cliente [CLIENTE].
+
+Escopo:
+- Produto/serviço: [DESCREVA]
+- Objetivo: [AWARENESS / CONVERSÃO / ENGAJAMENTO]
+- Formato entregável: [REELS / TT / POST / STORIES]
+- Data de publicação: [DATA]
+- Menções obrigatórias: [LISTA]
+- O que NÃO pode aparecer: [LISTA]
+- Tom: [DESCREVA]
+- Budget: [VALOR] (opcional)
+
+O briefing deve ser claro, objetivo e inspirador — o creator precisa entender o que a marca quer mas ter liberdade criativa. Inclua exemplos de referência se ajudar.`,
+    tags: ['influencer', 'creator', 'briefing', 'campanha'], autor: 'Polato', data: 'Jun 2026'
+  },
+  // ── PROJETOS ─────────────────────────────────────────────
+  {
+    id: 'prj-001', area: 'Projetos', estrelas: 4,
+    problema: 'Gerar cronograma detalhado a partir do escopo de um job',
+    resultado: 'Cronograma com todas as dependências em 2 minutos — sem esquecer etapa crítica',
+    prompt: `Crie um cronograma detalhado para o seguinte job:
+
+Cliente: [NOME]
+Entrega final: [DATA]
+Escopo: [DESCREVA O QUE SERÁ ENTREGUE]
+Áreas envolvidas: [ATENDIMENTO / CRIAÇÃO / SOCIAL / MÍDIA / etc]
+
+O cronograma deve:
+- Trabalhar de trás pra frente a partir da data de entrega
+- Incluir todas as fases: briefing, criação, aprovação interna, apresentação ao cliente, revisão, entrega final
+- Indicar dependências entre etapas
+- Reservar pelo menos [X dias] de buffer para imprevistos
+- Indicar quem é responsável por cada fase
+
+Formato: tabela com data de início, data de fim, responsável e dependências.`,
+    tags: ['cronograma', 'planejamento', 'projeto', 'prazo'], autor: 'Polato', data: 'Jun 2026'
+  }
+];
+
+// ─── ESTADO ────────────────────────────────────────────────────────────────
+let currentArea = 'todos';
+let activePrompt = null;
+
+// ─── RENDER ────────────────────────────────────────────────────────────────
+function render() {
+  const query = document.getElementById('searchInput').value.toLowerCase().trim();
+  const list = document.getElementById('promptList');
+  const empty = document.getElementById('emptyState');
+  list.innerHTML = '';
+  let count = 0;
+
+  PROMPTS.forEach((p, i) => {
+    const matchArea = currentArea === 'todos' || p.area === currentArea;
+    const matchQuery = !query ||
+      p.problema.toLowerCase().includes(query) ||
+      p.area.toLowerCase().includes(query) ||
+      p.resultado.toLowerCase().includes(query) ||
+      p.tags.some(t => t.toLowerCase().includes(query));
+
+    if (!matchArea || !matchQuery) return;
+    count++;
+
+    const stars = '★'.repeat(p.estrelas) + '☆'.repeat(5 - p.estrelas);
+    const tagsHtml = p.tags.map(t => `<span class="tag">${t}</span>`).join('');
+
+    const card = document.createElement('div');
+    card.className = 'prompt-card';
+    card.innerHTML = `
+      <div>
+        <div class="card-area">${p.area}</div>
+        <div class="card-problem">${p.problema}</div>
+        <div class="card-result">${p.resultado}</div>
+        <div class="card-tags">${tagsHtml}</div>
+        <div class="card-meta">Por ${p.autor} · ${p.data}</div>
+      </div>
+      <div class="card-right">
+        <div class="stars">${stars}</div>
+        <button class="btn-copy" onclick="event.stopPropagation(); quickCopy(${i}, this)">Copiar</button>
+      </div>`;
+    card.onclick = () => openModal(i);
+    list.appendChild(card);
+  });
+
+  document.getElementById('countTag').textContent = `${count} prompt${count !== 1 ? 's' : ''}`;
+  empty.style.display = count === 0 ? 'block' : 'none';
+}
+
+// ─── FILTROS ────────────────────────────────────────────────────────────────
+function setArea(area, btn) {
+  currentArea = area;
+  document.querySelectorAll('.f-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+function filterPrompts() { render(); }
+
+// ─── MODAL ────────────────────────────────────────────────────────────────
+function openModal(i) {
+  activePrompt = PROMPTS[i];
+  document.getElementById('m-area').textContent = activePrompt.area;
+  document.getElementById('m-title').textContent = activePrompt.problema;
+  document.getElementById('m-result').textContent = activePrompt.resultado;
+  document.getElementById('m-prompt').textContent = activePrompt.prompt;
+  document.getElementById('m-copy-btn').textContent = 'Copiar prompt';
+  document.getElementById('m-copy-btn').classList.remove('copied');
+  document.getElementById('promptModal').classList.add('open');
+}
+function closeModal() { document.getElementById('promptModal').classList.remove('open'); }
+
+function copyPrompt() {
+  if (!activePrompt) return;
+  navigator.clipboard.writeText(activePrompt.prompt).then(() => {
+    const btn = document.getElementById('m-copy-btn');
+    btn.textContent = '✓ Copiado!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copiar prompt'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+function quickCopy(i, btn) {
+  navigator.clipboard.writeText(PROMPTS[i].prompt).then(() => {
+    btn.textContent = '✓ Copiado';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copiar'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+// ─── EXPORT CSV ────────────────────────────────────────────────────────────
+function exportCSV() {
+  const header = ['ID', 'Área', 'Problema', 'Resultado', 'Prompt', 'Tags', 'Autor', 'Data', 'Estrelas'];
+  const rows = PROMPTS.map(p => [
+    p.id, p.area, p.problema, p.resultado,
+    `"${p.prompt.replace(/"/g, '""')}"`,
+    p.tags.join(' | '), p.autor, p.data, p.estrelas
+  ]);
+  const csv = [header, ...rows].map(r => r.join(',')).join('\n');
+  const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'live-prompt-bank.csv'; a.click();
+}
+
+// ─── INIT ────────────────────────────────────────────────────────────────
+render();
+</script>
+</body>
+</html>
