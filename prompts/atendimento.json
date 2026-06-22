@@ -1,0 +1,35 @@
+[
+  {
+    "id": "atd-001",
+    "area": "Atendimento",
+    "problema": "Transformar anotações brutas de reunião em ata estruturada",
+    "prompt": "Você é um assistente de atendimento da agência ℓiⱴε. Recebi as seguintes anotações brutas de uma reunião com o cliente [NOME DO CLIENTE]:\n\n[COLE AS ANOTAÇÕES AQUI]\n\nTransforme isso em uma ata profissional com:\n- Data e participantes\n- Resumo executivo (3 linhas)\n- Decisões tomadas (lista com responsável e prazo)\n- Próximos passos numerados com dono e data\n- Pendências do cliente\n\nTom: profissional mas direto. Sem enrolação.",
+    "resultado": "Gera ata pronta para enviar ao cliente em menos de 2 minutos",
+    "tags": ["ata", "reunião", "cliente", "documentação"],
+    "autor": "Polato",
+    "data": "2026-06",
+    "estrelas": 5
+  },
+  {
+    "id": "atd-002",
+    "area": "Atendimento",
+    "problema": "Transformar e-mail confuso do cliente em brief operacional",
+    "prompt": "O cliente enviou o seguinte e-mail/mensagem pedindo uma entrega:\n\n[COLE O E-MAIL DO CLIENTE]\n\nExtrai disso um brief operacional interno com:\n- Objetivo da entrega\n- Formato e especificações técnicas\n- Prazo solicitado\n- Tom e referências mencionadas\n- Pontos de dúvida que precisam de alinhamento (lista as perguntas que você faria)\n\nSe algo estiver ambíguo, sinalize claramente em vez de inventar.",
+    "resultado": "Economiza a reunião de alinhamento interno — o time já recebe a demanda estruturada",
+    "tags": ["brief", "cliente", "alinhamento", "operacional"],
+    "autor": "Polato",
+    "data": "2026-06",
+    "estrelas": 5
+  },
+  {
+    "id": "atd-003",
+    "area": "Atendimento",
+    "problema": "Escrever e-mail de alinhamento pós-reunião",
+    "prompt": "Escreva um e-mail de alinhamento para o cliente [NOME] após nossa reunião de hoje. Os pontos principais foram:\n\n[LISTE OS PONTOS]\n\nO e-mail deve:\n- Ser profissional mas com o tom humano da Live\n- Confirmar o que foi decidido\n- Deixar claro os próximos passos e quem faz o quê\n- Ter no máximo 150 palavras\n- Terminar com uma frase que deixe o cliente tranquilo e animado\n\nNão use frases clichê como 'conforme acordado' ou 'venho por meio deste'.",
+    "resultado": "E-mail pronto em 30 segundos, sem o vazio de página em branco",
+    "tags": ["e-mail", "cliente", "pós-reunião", "comunicação"],
+    "autor": "Polato",
+    "data": "2026-06",
+    "estrelas": 4
+  }
+]
