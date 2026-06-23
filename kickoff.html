@@ -1,0 +1,2680 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ℓiⱴε × IA — Kickoff Comitê</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --yellow: #f2ff00;
+    --black: #0a0a0a;
+    --gray: #1a1a1a;
+    --gray2: #2a2a2a;
+    --gray3: #444;
+    --white: #f5f5f5;
+    --white2: #cccccc;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* TICKER */
+  .ticker-wrap {
+    background: var(--yellow);
+    overflow: hidden;
+    padding: 10px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .ticker-track {
+    display: flex;
+    gap: 0;
+    animation: ticker 30s linear infinite;
+    white-space: nowrap;
+  }
+  .ticker-track span {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--black);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0 32px;
+  }
+  .ticker-track span::after {
+    content: '×';
+    margin-left: 32px;
+    opacity: 0.4;
+  }
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* NAV */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 48px;
+    border-bottom: 1px solid var(--gray2);
+    position: sticky;
+    top: 38px;
+    background: var(--black);
+    z-index: 90;
+  }
+  .logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 22px;
+    color: var(--yellow);
+    letter-spacing: -0.02em;
+  }
+  .nav-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--gray3);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--white2);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--yellow); }
+
+  /* SECTIONS */
+  section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 80px 48px;
+  }
+  section + section {
+    border-top: 1px solid var(--gray2);
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 100px 48px 80px;
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .hero-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--yellow);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--yellow);
+  }
+  .hero h1 {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(42px, 6vw, 86px);
+    font-weight: 700;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    color: var(--white);
+    margin-bottom: 24px;
+  }
+  .hero h1 em {
+    color: var(--yellow);
+    font-style: normal;
+  }
+  .hero-sub {
+    font-size: 18px;
+    color: var(--white2);
+    max-width: 580px;
+    margin-bottom: 48px;
+    line-height: 1.7;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .hero-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .hero-meta-item .label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--gray3);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+  .hero-meta-item .value {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: var(--yellow);
+  }
+
+  /* SECTION HEADER */
+  .sec-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 48px;
+  }
+  .sec-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--yellow);
+    opacity: 0.5;
+    padding-top: 6px;
+  }
+  .sec-header h2 {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(22px, 3vw, 34px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .sec-header h2 em {
+    color: var(--yellow);
+    font-style: normal;
+  }
+
+  /* PREMISE BOX */
+  .premise-box {
+    border: 1px solid var(--yellow);
+    padding: 36px 40px;
+    margin: 40px 0;
+    position: relative;
+  }
+  .premise-box::before {
+    content: 'PREMISSA CENTRAL';
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--yellow);
+    position: absolute;
+    top: -7px;
+    left: 20px;
+    background: var(--black);
+    padding: 0 8px;
+  }
+  .premise-box p {
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--white);
+  }
+  .premise-box strong { color: var(--yellow); }
+
+  /* STATS ROW */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--gray2);
+    margin: 40px 0;
+  }
+  .stat-cell {
+    background: var(--gray);
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .stat-cell .big {
+    font-family: 'Space Mono', monospace;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--yellow);
+    line-height: 1;
+  }
+  .stat-cell .desc {
+    font-size: 13px;
+    color: var(--white2);
+    line-height: 1.4;
+  }
+
+  /* OBJECTIVES LIST */
+  .obj-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .obj-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--gray2);
+  }
+  .obj-item:last-child { border-bottom: none; }
+  .obj-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--yellow);
+    border-radius: 50%;
+    margin-top: 8px;
+    flex-shrink: 0;
+  }
+  .obj-text {
+    font-size: 16px;
+    color: var(--white2);
+    line-height: 1.6;
+  }
+
+  /* TIER CARDS */
+  .tier-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--gray2);
+    margin-top: 8px;
+  }
+  .tier-card {
+    background: var(--gray);
+    padding: 36px 32px;
+  }
+  .tier-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--yellow);
+    margin-bottom: 8px;
+  }
+  .tier-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--white);
+    line-height: 1.2;
+  }
+  .tier-desc {
+    font-size: 13px;
+    color: var(--white2);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  .tier-freq {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--yellow);
+    opacity: 0.7;
+    border-top: 1px solid var(--gray2);
+    padding-top: 16px;
+    margin-top: 16px;
+  }
+  .tier-members {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 16px;
+  }
+  .tier-member {
+    font-size: 12px;
+    color: var(--white2);
+    padding: 6px 10px;
+    background: var(--gray2);
+    border-left: 2px solid var(--gray3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .tier-member .role {
+    font-size: 10px;
+    color: var(--gray3);
+  }
+
+  /* ROADMAP */
+  .roadmap {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+  }
+  .roadmap::before {
+    content: '';
+    position: absolute;
+    left: 80px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--gray2);
+  }
+  .roadmap-item {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 32px;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--gray2);
+    position: relative;
+  }
+  .roadmap-item:last-child { border-bottom: none; }
+  .roadmap-phase {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--yellow);
+    text-align: right;
+    padding-top: 4px;
+    position: relative;
+  }
+  .roadmap-phase::after {
+    content: '';
+    position: absolute;
+    right: -37px;
+    top: 8px;
+    width: 10px;
+    height: 10px;
+    background: var(--yellow);
+    border-radius: 50%;
+  }
+  .roadmap-content h3 {
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--white);
+  }
+  .roadmap-content p {
+    font-size: 14px;
+    color: var(--white2);
+    line-height: 1.6;
+  }
+  .roadmap-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 12px;
+  }
+  .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 4px 10px;
+    background: var(--gray2);
+    color: var(--white2);
+    border: 1px solid var(--gray3);
+  }
+
+  /* RITUALS TABLE */
+  .rituals-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+    background: var(--gray2);
+    margin-top: 8px;
+  }
+  .ritual-card {
+    background: var(--gray);
+    padding: 32px 28px;
+  }
+  .ritual-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--yellow);
+    margin-bottom: 12px;
+  }
+  .ritual-detail {
+    font-size: 13px;
+    color: var(--white2);
+    line-height: 1.6;
+  }
+  .ritual-who {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--gray3);
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* DOCS GRID */
+  .docs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+    background: var(--gray2);
+    margin-top: 8px;
+  }
+  .doc-card {
+    background: var(--gray);
+    padding: 28px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: background 0.2s;
+    text-decoration: none;
+  }
+  .doc-card:hover { background: var(--gray2); }
+  .doc-type {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--yellow);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+  .doc-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.3;
+  }
+  .doc-desc {
+    font-size: 13px;
+    color: var(--white2);
+    line-height: 1.5;
+  }
+  .doc-link {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--yellow);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+  }
+  .doc-link::after { content: '↗'; }
+  .doc-link:hover { text-decoration: underline; }
+
+  /* BOAS PRATICAS */
+  .boas-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--gray2);
+    margin-top: 8px;
+  }
+  .boa-card {
+    background: var(--gray);
+    padding: 28px 24px;
+  }
+  .boa-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--yellow);
+    opacity: 0.2;
+    margin-bottom: 12px;
+  }
+  .boa-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .boa-desc {
+    font-size: 13px;
+    color: var(--white2);
+    line-height: 1.6;
+  }
+
+  /* NEXT STEPS */
+  .steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    counter-reset: steps;
+  }
+  .step-item {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 24px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--gray2);
+    counter-increment: steps;
+  }
+  .step-item:last-child { border-bottom: none; }
+  .step-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--yellow);
+    opacity: 0.25;
+    line-height: 1;
+    padding-top: 4px;
+  }
+  .step-content h3 {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--yellow);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+  .step-content p {
+    font-size: 14px;
+    color: var(--white2);
+    line-height: 1.6;
+  }
+  .step-content ul {
+    margin-top: 10px;
+    padding-left: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .step-content ul li {
+    font-size: 13px;
+    color: var(--white2);
+    padding-left: 14px;
+    position: relative;
+  }
+  .step-content ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--yellow);
+    opacity: 0.5;
+  }
+
+  /* INFRAESTRUTURA / ROADMAP FERRAMENTAS */
+  .infra-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--gray2);
+    margin-top: 8px;
+  }
+  .infra-card {
+    background: var(--gray);
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .infra-icon {
+    font-size: 24px;
+    line-height: 1;
+  }
+  .infra-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--yellow);
+  }
+  .infra-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.3;
+  }
+  .infra-desc {
+    font-size: 13px;
+    color: var(--white2);
+    line-height: 1.6;
+  }
+  .infra-status {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    display: inline-block;
+    width: fit-content;
+  }
+  .status-live { background: rgba(0,230,118,0.15); color: #00e676; border: 1px solid rgba(0,230,118,0.3); }
+  .status-building { background: rgba(242,255,0,0.12); color: var(--yellow); border: 1px solid rgba(242,255,0,0.3); }
+  .status-next { background: rgba(100,100,100,0.2); color: var(--white2); border: 1px solid var(--gray3); }
+
+  /* MAPA INTERATIVO */
+  .mapa-tabs {
+    display: flex;
+    gap: 2px;
+    background: var(--gray2);
+    margin-bottom: 2px;
+  }
+  .mapa-tab {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 12px 20px;
+    background: var(--gray);
+    color: var(--white2);
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    flex: 1;
+  }
+  .mapa-tab.active, .mapa-tab:hover { background: var(--yellow); color: var(--black); }
+  .mapa-panel { display: none; }
+  .mapa-panel.active { display: block; }
+
+  .area-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    background: var(--gray2);
+  }
+  .area-card {
+    background: var(--gray);
+    padding: 22px 18px;
+    cursor: pointer;
+    transition: background 0.15s;
+    position: relative;
+  }
+  .area-card:hover { background: #222; }
+  .area-card.has-note::after {
+    content: '●';
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    font-size: 8px;
+    color: var(--yellow);
+  }
+  .area-status-bar {
+    height: 3px;
+    border-radius: 0;
+    margin-bottom: 12px;
+  }
+  .bar-green { background: #00e676; }
+  .bar-yellow { background: var(--yellow); }
+  .bar-red { background: #ff1744; }
+  .bar-gray { background: var(--gray3); }
+  .area-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .area-opp {
+    font-size: 12px;
+    color: var(--white2);
+    line-height: 1.5;
+  }
+  .area-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    padding: 2px 7px;
+    border-radius: 10px;
+    display: inline-block;
+    margin-top: 8px;
+  }
+  .tag-hot { background: rgba(255,23,68,0.2); color: #ff6b8a; }
+  .tag-ok { background: rgba(0,230,118,0.15); color: #00e676; }
+  .tag-watch { background: rgba(242,255,0,0.12); color: var(--yellow); }
+
+  .area-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .area-modal.open { display: flex; }
+  .modal-box {
+    background: var(--gray);
+    border: 1px solid var(--gray2);
+    border-top: 3px solid var(--yellow);
+    max-width: 560px;
+    width: 100%;
+    padding: 36px;
+    position: relative;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+  .modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: var(--white2);
+    font-size: 18px;
+    cursor: pointer;
+    font-family: 'Space Mono', monospace;
+  }
+  .modal-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--yellow);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+  }
+  .modal-row {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray2);
+    font-size: 13px;
+  }
+  .modal-row:last-child { border-bottom: none; }
+  .modal-row .mlabel {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gray3);
+    padding-top: 2px;
+  }
+  .modal-row .mval { color: var(--white2); line-height: 1.5; }
+
+  /* CONTRIBUIÇÃO */
+  .contrib-hero {
+    border: 1px solid var(--yellow);
+    padding: 40px;
+    margin-bottom: 32px;
+    text-align: center;
+  }
+  .contrib-hero p {
+    font-size: 17px;
+    color: var(--white2);
+    line-height: 1.7;
+    max-width: 620px;
+    margin: 0 auto 24px;
+  }
+  .contrib-hero strong { color: var(--white); }
+  .contrib-cta-group {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .cta-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 12px 24px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-block;
+  }
+  .cta-primary { background: var(--yellow); color: var(--black); }
+  .cta-primary:hover { opacity: 0.88; }
+  .cta-secondary { background: transparent; color: var(--yellow); border: 1px solid var(--yellow); }
+  .cta-secondary:hover { background: rgba(242,255,0,0.08); }
+
+  .contrib-ways {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--gray2);
+  }
+  .contrib-card {
+    background: var(--gray);
+    padding: 28px 24px;
+  }
+  .contrib-icon { font-size: 22px; margin-bottom: 12px; }
+  .contrib-ctitle {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+  .contrib-cdesc {
+    font-size: 13px;
+    color: var(--white2);
+    line-height: 1.6;
+    margin-bottom: 14px;
+  }
+  .contrib-clink {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--yellow);
+    text-decoration: none;
+  }
+  .contrib-clink:hover { text-decoration: underline; }
+
+  /* QUOTE / FECHAMENTO */
+  .closing {
+    background: var(--gray);
+    border-top: 3px solid var(--yellow);
+    padding: 80px 48px;
+    text-align: center;
+  }
+  .closing-quote {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(18px, 2.5vw, 26px);
+    line-height: 1.4;
+    color: var(--white);
+    max-width: 680px;
+    margin: 0 auto 24px;
+  }
+  .closing-quote em { color: var(--yellow); font-style: normal; }
+  .closing-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--gray3);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 32px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--gray2);
+  }
+  .footer-logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 18px;
+    color: var(--yellow);
+  }
+  .footer-meta {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--gray3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-align: right;
+  }
+
+  /* PILL */
+  .pill {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-left: 8px;
+  }
+  .pill-yellow { background: var(--yellow); color: var(--black); }
+  .pill-dark { background: var(--gray2); color: var(--white2); border: 1px solid var(--gray3); }
+
+  /* BIBLIOTECA DE PROMPTS */
+  .prompt-lib-hero {
+    background: var(--gray);
+    border-left: 3px solid var(--yellow);
+    padding: 36px 40px;
+    margin-bottom: 32px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: center;
+  }
+  .prompt-lib-hero p { font-size: 15px; color: var(--white2); line-height: 1.7; }
+  .prompt-lib-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    background: var(--yellow);
+    color: var(--black);
+    padding: 14px 24px;
+    text-decoration: none;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+  }
+  .prompt-lib-btn:hover { opacity: 0.85; }
+  .prompts-areas {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    background: var(--gray2);
+    margin-top: 8px;
+  }
+  .prompt-area-card {
+    background: var(--gray);
+    padding: 22px 20px;
+  }
+  .prompt-area-icon { font-size: 22px; margin-bottom: 10px; }
+  .prompt-area-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+  .prompt-area-ex {
+    font-size: 12px;
+    color: var(--white2);
+    line-height: 1.5;
+  }
+  .prompt-area-ex em {
+    font-style: normal;
+    color: var(--yellow);
+    font-size: 11px;
+  }
+
+  /* FASES DO PROJETO IA */
+  .fases-track {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    background: var(--gray2);
+    margin: 32px 0;
+    position: relative;
+  }
+  .fase-card {
+    background: var(--gray);
+    padding: 32px 24px;
+    position: relative;
+  }
+  .fase-card.active { background: #111; border-top: 2px solid var(--yellow); }
+  .fase-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--yellow);
+    margin-bottom: 12px;
+  }
+  .fase-badge.done { color: #4caf50; }
+  .fase-badge.wip { color: var(--yellow); }
+  .fase-badge.planned { color: var(--gray3); }
+  .fase-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+  .fase-desc {
+    font-size: 13px;
+    color: var(--white2);
+    line-height: 1.6;
+  }
+  .fase-status {
+    display: inline-block;
+    margin-top: 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    padding: 3px 10px;
+    border: 1px solid var(--gray3);
+    color: var(--white2);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .fase-status.done { border-color: #4caf50; color: #4caf50; }
+  .fase-status.wip { border-color: var(--yellow); color: var(--yellow); }
+
+  /* MAPA COLABORATIVO */
+  .collab-intro {
+    background: var(--gray);
+    border: 1px solid var(--gray2);
+    padding: 36px 40px;
+    margin-bottom: 40px;
+    display: grid;
+    grid-template-columns: 1fr 220px;
+    gap: 32px;
+    align-items: start;
+  }
+  .collab-intro h3 {
+    font-family: 'Space Mono', monospace;
+    font-size: 16px;
+    color: var(--yellow);
+    margin-bottom: 12px;
+  }
+  .collab-intro p { font-size: 14px; color: var(--white2); line-height: 1.7; }
+  .collab-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .collab-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 12px 18px;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.2s;
+  }
+  .collab-btn-primary { background: var(--yellow); color: var(--black); font-weight: 700; }
+  .collab-btn-primary:hover { opacity: 0.85; }
+  .collab-btn-secondary { border: 1px solid var(--gray3); color: var(--white2); }
+  .collab-btn-secondary:hover { border-color: var(--yellow); color: var(--yellow); }
+
+  .mapa-collab-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--gray2);
+  }
+  .mapa-collab-card {
+    background: var(--gray);
+    padding: 24px 22px;
+    cursor: pointer;
+    transition: background 0.18s;
+    position: relative;
+  }
+  .mapa-collab-card:hover { background: #1f1f1f; }
+  .mcc-icon { font-size: 22px; margin-bottom: 10px; }
+  .mcc-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+  .mcc-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+  }
+  .mcc-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .dot-red { background: #f44336; }
+  .dot-yellow { background: var(--yellow); }
+  .dot-green { background: #4caf50; }
+  .dot-gray { background: var(--gray3); }
+  .mcc-ia {
+    font-size: 12px;
+    color: var(--white2);
+    line-height: 1.5;
+  }
+  .mcc-action {
+    margin-top: 14px;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--yellow);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.7;
+  }
+  .mcc-badge-ai {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    padding: 2px 7px;
+    background: var(--yellow);
+    color: var(--black);
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  /* MODAL COLLAB */
+  .collab-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.88);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+  }
+  .collab-modal.open { display: flex; }
+  .collab-modal-box {
+    background: var(--gray);
+    border: 1px solid var(--gray2);
+    border-top: 2px solid var(--yellow);
+    max-width: 680px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 40px;
+    position: relative;
+  }
+  .collab-modal-close {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: var(--white2);
+    font-size: 20px;
+    cursor: pointer;
+    font-family: 'Space Mono', monospace;
+  }
+  .collab-modal-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--yellow);
+    margin-bottom: 6px;
+  }
+  .collab-modal-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--gray3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 28px;
+  }
+  .cm-section {
+    margin-bottom: 24px;
+  }
+  .cm-section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--yellow);
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--gray2);
+  }
+  .cm-row {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray2);
+    font-size: 13px;
+  }
+  .cm-row:last-child { border-bottom: none; }
+  .cm-label { color: var(--gray3); font-size: 12px; }
+  .cm-val { color: var(--white2); line-height: 1.5; }
+  .cm-ia-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .cm-ia-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--white2);
+    padding: 8px 12px;
+    background: var(--gray2);
+  }
+  .cm-ia-item::before { content: '→'; color: var(--yellow); flex-shrink: 0; }
+  .cm-suggest-btn {
+    display: block;
+    width: 100%;
+    margin-top: 24px;
+    padding: 14px;
+    background: var(--yellow);
+    color: var(--black);
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .cm-suggest-btn:hover { opacity: 0.85; }
+
+  @media (max-width: 768px) {
+    .prompts-areas { grid-template-columns: repeat(2, 1fr); }
+    .fases-track { grid-template-columns: repeat(2, 1fr); }
+    .mapa-collab-grid { grid-template-columns: 1fr; }
+    .prompt-lib-hero { grid-template-columns: 1fr; }
+    .collab-intro { grid-template-columns: 1fr; }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span>ℓiⱴε × IA</span>
+    <span>Kickoff · 24 Junho 2026</span>
+    <span>Culture-Driven + IA-Driven</span>
+    <span>Líderes que Multiplicam</span>
+    <span>Prompt Bank · 11 Áreas</span>
+    <span>Mapeie sua área agora</span>
+    <span>Fase 1 → Fase 4</span>
+    <span>ℓiⱴε × IA</span>
+    <span>Kickoff · 24 Junho 2026</span>
+    <span>Culture-Driven + IA-Driven</span>
+    <span>Líderes que Multiplicam</span>
+    <span>Prompt Bank · 11 Áreas</span>
+    <span>Mapeie sua área agora</span>
+    <span>Fase 1 → Fase 4</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">ℓiⱴε</div>
+  <div class="nav-tag">Comitê de IA · v1.0</div>
+  <ul class="nav-links">
+    <li><a href="#contexto">Contexto</a></li>
+    <li><a href="#estrutura">Estrutura</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#docs">Docs</a></li>
+    <li><a href="#claude">Claude</a></li>
+    <li><a href="#infra">Infra IA</a></li>
+    <li><a href="#mapa">Mapa</a></li>
+    <li><a href="#contribua">Contribua</a></li>
+    <li><a href="#proximos">Próximos</a></li>
+    <li><a href="#prompts">Prompts</a></li>
+    <li><a href="#fases">Fases IA</a></li>
+    <li><a href="#mapa-colaborativo">Mapeie-se</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Kickoff Oficial · 24 de Junho de 2026</div>
+  <h1>Comitê de<br><em>Implementação</em><br>de IA</h1>
+  <p class="hero-sub">De agência culture-driven para <strong>IA-driven + culture-driven</strong>. Não é sobre moda. É sobre vantagem competitiva real — e pessoas mais poderosas.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <span class="label">Líder</span>
+      <span class="value">Polato + Mari Gouveia</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="label">Início</span>
+      <span class="value">Q2 · 2026</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="label">Versão</span>
+      <span class="value">1.0 · Live</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="label">Status</span>
+      <span class="value">🟡 Iniciando</span>
+    </div>
+  </div>
+</div>
+
+<!-- 01. CONTEXTO -->
+<section id="contexto">
+  <div class="sec-header">
+    <span class="sec-num">01</span>
+    <h2>Por que <em>agora</em>?</h2>
+  </div>
+
+  <p style="font-size:16px; color:var(--white2); max-width:700px; line-height:1.8; margin-bottom:32px;">
+    A Live opera num mercado que muda semana a semana. IA passou de hype para ferramenta real em 2024 — e em 2026 em diante, quem não souber usá-la vai <strong style="color:var(--white)">entregar menos com mais esforço.</strong> Não é sobre uma ideia criativa isolada. É sobre vantagem competitiva.
+  </p>
+
+  <div class="premise-box">
+    <p>Nosso objetivo é <strong>transformar líderes em multiplicadores</strong>, aumentando capacidade, velocidade e assertividade produtiva via IA — mantendo o capital humano voltado para o que realmente importa: <strong>criatividade e resolução de problemas.</strong></p>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-cell">
+      <div class="big">40%</div>
+      <div class="desc">do tempo em tarefas automatizáveis</div>
+    </div>
+    <div class="stat-cell">
+      <div class="big">7+</div>
+      <div class="desc">áreas sem processo de IA definido</div>
+    </div>
+    <div class="stat-cell">
+      <div class="big">R$0</div>
+      <div class="desc">investimento estruturado em IA hoje</div>
+    </div>
+    <div class="stat-cell">
+      <div class="big">∞</div>
+      <div class="desc">potencial de ganho em eficiência operacional</div>
+    </div>
+  </div>
+
+  <div class="obj-list">
+    <div class="obj-item">
+      <div class="obj-dot"></div>
+      <div class="obj-text">Tornar a Live a agência mais <strong>IA-driven + culture-driven</strong> do mercado</div>
+    </div>
+    <div class="obj-item">
+      <div class="obj-dot"></div>
+      <div class="obj-text">Gerar <strong>ganhos operacionais reais</strong> nas áreas mais manuais — do atendimento ao back office</div>
+    </div>
+    <div class="obj-item">
+      <div class="obj-dot"></div>
+      <div class="obj-text">Transformar líderes em <strong>multiplicadores de IA</strong> sem crescer o headcount</div>
+    </div>
+    <div class="obj-item">
+      <div class="obj-dot"></div>
+      <div class="obj-text">Criar <strong>diferencial comercial</strong> para novas propostas e retenção de clientes</div>
+    </div>
+    <div class="obj-item">
+      <div class="obj-dot"></div>
+      <div class="obj-text">Tornar pessoas <strong>mais poderosas e menos substituíveis</strong> — não o contrário</div>
+    </div>
+  </div>
+</section>
+
+<!-- 02. ESTRUTURA DOS TIERS -->
+<section id="estrutura">
+  <div class="sec-header">
+    <span class="sec-num">02</span>
+    <h2>Estrutura do <em>Comitê</em></h2>
+  </div>
+
+  <p style="font-size:14px; color:var(--white2); max-width:640px; line-height:1.7; margin-bottom:36px;">
+    Três tiers com papéis distintos — quem decide, quem experimenta e quem especializa. A ideia é que cada nível retroalimente o outro com aprendizados reais.
+  </p>
+
+  <div class="tier-grid">
+
+    <!-- TIER 1 -->
+    <div class="tier-card">
+      <div class="tier-label">Tier 1</div>
+      <div class="tier-name">Board de Gestão<br>— Decisor</div>
+      <div class="tier-desc">Decide o que é priorizado, onde vai o orçamento e quais projetos avançam. Acesso total ao Claude Enterprise.</div>
+      <div class="tier-members">
+        <div class="tier-member">Polato <span class="role">Líder · Mídia, BI, Influs</span></div>
+        <div class="tier-member">Mari Gouveia <span class="role">Co-líder · Insights & BI</span></div>
+        <div class="tier-member">Sté Alves <span class="role">Operações</span></div>
+        <div class="tier-member">Mário Ferreira <span class="role">Financeiro / TI</span></div>
+        <div class="tier-member">Bruno Lanzo <span class="role">Criação / Social</span></div>
+        <div class="tier-member">Priscila Penachio <span class="role">Atendimento</span></div>
+        <div class="tier-member">Bruno Poiani <span class="role">Negócios</span></div>
+        <div class="tier-member">Naira Fanzeres <span class="role">Pessoas / RH</span></div>
+        <div class="tier-member">Fê Kraemer <span class="role">Estratégia</span></div>
+      </div>
+      <div class="tier-freq">→ Reunião mensal · 60min · pauta estruturada</div>
+    </div>
+
+    <!-- TIER 2 -->
+    <div class="tier-card">
+      <div class="tier-label">Tier 2</div>
+      <div class="tier-name">Comitê IA Live<br>— Executores</div>
+      <div class="tier-desc">Entusiastas de todas as áreas. Recebem formação, acesso ao Claude e Gemini, executam pilotos e reportam aprendizados ao Tier 1.</div>
+      <div class="tier-members">
+        <div class="tier-member">Sofia Cunha <span class="role">Estratégia</span></div>
+        <div class="tier-member">Thamara Maura <span class="role">Criação</span></div>
+        <div class="tier-member">Luisa Dal Mas <span class="role">Conteúdo</span></div>
+        <div class="tier-member">Murilo Tifoski <span class="role">Criação / Motion</span></div>
+        <div class="tier-member">Erick Melo <span class="role">BI & Insights</span></div>
+        <div class="tier-member">Duda Monteiro <span class="role">Ops / Projetos</span></div>
+        <div class="tier-member">Arthur Pinheiro <span class="role">TI / Infra</span></div>
+        <div class="tier-member">Ana Beatriz <span class="role">Negócios</span></div>
+        <div class="tier-member">Bruna Spiti <span class="role">Pessoas</span></div>
+      </div>
+      <div class="tier-freq">→ Lab quinzenal · 90min · formato prático</div>
+    </div>
+
+    <!-- TIER 3 -->
+    <div class="tier-card">
+      <div class="tier-label">Tier 3</div>
+      <div class="tier-name">Convidados Especialistas<br>— Sob Demanda</div>
+      <div class="tier-desc">Especialistas por área. Entram conforme a priorização do board, preenchem pesquisa inicial e disseminam inovações nos seus núcleos.</div>
+      <div class="tier-members">
+        <div class="tier-member">Breno Assumpção <span class="role">Atendimento</span></div>
+        <div class="tier-member">Émelin Cerveira <span class="role">Operações</span></div>
+        <div class="tier-member">Amanda Carneiro <span class="role">Operações</span></div>
+        <div class="tier-member">Jéssica <span class="role">Operações</span></div>
+        <div class="tier-member">Maria Eduarda <span class="role">Insights / CM</span></div>
+        <div class="tier-member">Guilherme Motta <span class="role">Insights / BI</span></div>
+        <div class="tier-member">Felipe Banjo <span class="role">Criação</span></div>
+        <div class="tier-member">Roberto Ferreira <span class="role">Marketing</span></div>
+      </div>
+      <div class="tier-freq">→ Sob demanda · pesquisa + formato prático</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 03. ROADMAP -->
+<section id="roadmap">
+  <div class="sec-header">
+    <span class="sec-num">03</span>
+    <h2><em>Roadmap</em> de implementação</h2>
+  </div>
+
+  <div class="roadmap">
+
+    <div class="roadmap-item">
+      <div class="roadmap-phase">FASE 01<br>MAIO–JUN</div>
+      <div class="roadmap-content">
+        <h3>Fundação</h3>
+        <p>Definição de membros, Kick-off geral, formulário de problemas por área, setup do Claude Enterprise e banco de dados de tempo por projeto.</p>
+        <div class="roadmap-tags">
+          <span class="tag">Membros definidos</span>
+          <span class="tag">Acessos Claude</span>
+          <span class="tag">Formulário</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="roadmap-item">
+      <div class="roadmap-phase">FASE 02<br>JUNHO</div>
+      <div class="roadmap-content">
+        <h3>Formação</h3>
+        <p>Trilha básica (Tiers 2 e 3), trilha no-code intermediária, trilha avançada (Tiers 1 e 2), repositório de prompts por área e sessões quinzenais de 90min.</p>
+        <div class="roadmap-tags">
+          <span class="tag">Trilha Básica</span>
+          <span class="tag">Trilha Intermediária</span>
+          <span class="tag">Trilha Avançada</span>
+          <span class="tag">Prompt Bank</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="roadmap-item">
+      <div class="roadmap-phase">FASE 03<br>JULHO</div>
+      <div class="roadmap-content">
+        <h3>Primeiros Pilotos</h3>
+        <p>Projetos via Matriz de Priorização. Pilotos em Operações, Atendimento e Insights. Heineken Listener como case de referência. Modelo de horas de agente para propostas.</p>
+        <div class="roadmap-tags">
+          <span class="tag">Pilotos reais</span>
+          <span class="tag">Matriz de priorização</span>
+          <span class="tag">Case Heineken</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="roadmap-item">
+      <div class="roadmap-phase">FASE 04<br>AGOSTO</div>
+      <div class="roadmap-content">
+        <h3>Escala</h3>
+        <p>Documentações por área, expansão para Criação, Social e Mídia. Propostas comerciais com linha IA. Apresentação de ROI para o board — meta de 1 projeto/semana.</p>
+        <div class="roadmap-tags">
+          <span class="tag">Docs por área</span>
+          <span class="tag">ROI board</span>
+          <span class="tag">Propostas com IA</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="roadmap-item">
+      <div class="roadmap-phase">FASE 05<br>SET–DEZ</div>
+      <div class="roadmap-content">
+        <h3>Posicionamento Externo</h3>
+        <p>Cases publicados, posicionamento IA-driven + culture-driven no mercado. Produto ou serviço derivado (opcional). Revisão anual do comitê.</p>
+        <div class="roadmap-tags">
+          <span class="tag">Cases externos</span>
+          <span class="tag">Posicionamento</span>
+          <span class="tag">Revisão anual</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 04. RITUAIS -->
+<section id="rituais">
+  <div class="sec-header">
+    <span class="sec-num">04</span>
+    <h2>Rituais de <em>atualização</em></h2>
+  </div>
+
+  <div class="rituals-grid">
+    <div class="ritual-card">
+      <div class="ritual-title">⚡ AI News Flash</div>
+      <div class="ritual-detail">Curadoria semanal de novidades em IA relevantes para o mercado de comunicação. Curto, direto, assíncrono.</div>
+      <div class="ritual-who">Semanal · 5min async · Slack</div>
+    </div>
+    <div class="ritual-card">
+      <div class="ritual-title">🧪 Lab Session</div>
+      <div class="ritual-detail">Sessão prática quinzenal com problema real. Tier 2 apresenta, testa e documenta. O aprendizado vai para o banco de prompts.</div>
+      <div class="ritual-who">Quinzenal · 90min · Tier 2</div>
+    </div>
+    <div class="ritual-card">
+      <div class="ritual-title">📊 Board Meeting IA</div>
+      <div class="ritual-detail">Reunião mensal do Tier 1 com foco em ROI, prioridades e aprovação de projetos. Pauta estruturada, sem enrolação.</div>
+      <div class="ritual-who">Mensal · 60min · Tier 1</div>
+    </div>
+    <div class="ritual-card">
+      <div class="ritual-title">🚀 AI Offsite</div>
+      <div class="ritual-detail">Retrospectiva trimestral com Tiers 1 e 2. Meio dia fora da rotina para revisar, celebrar e recalibrar o roadmap.</div>
+      <div class="ritual-who">Trimestral · Meio dia · Tiers 1+2</div>
+    </div>
+  </div>
+</section>
+
+<!-- 05. DOCUMENTOS -->
+<section id="docs">
+  <div class="sec-header">
+    <span class="sec-num">05</span>
+    <h2>Documentos do <em>projeto</em></h2>
+  </div>
+
+  <p style="font-size:14px; color:var(--white2); max-width:600px; line-height:1.7; margin-bottom:32px;">
+    Tudo o que foi construído até aqui está documentado e acessível. Esses são os materiais base do comitê — vivos, editáveis e em constante evolução.
+  </p>
+
+  <div class="docs-grid">
+
+    <div class="doc-card">
+      <div class="doc-type">Estratégia · Google Doc</div>
+      <div class="doc-name">ℓiⱴε AI Committee — vFINAL</div>
+      <div class="doc-desc">Documento mestre do comitê. Contexto, estrutura de tiers, roadmap, matriz de priorização, trilhas de formação e próximos passos. É o "bíblia" do projeto.</div>
+      <a class="doc-link" href="https://docs.google.com/document/d/1GUCf98DfTlwq_jWyRargdc_ukacu3Wa5o2vuBMoOhxk/edit" target="_blank">Abrir documento</a>
+    </div>
+
+    <div class="doc-card">
+      <div class="doc-type">Convites · Google Doc</div>
+      <div class="doc-name">ℓiⱴε AI Committee — Convites aos Tiers</div>
+      <div class="doc-desc">Textos de convite para Tiers 1, 2 e 3. Tom autêntico e conversacional — sem RH, sem LinkedIn. Assinados por Polato e Mariana.</div>
+      <a class="doc-link" href="https://docs.google.com/document/d/12-Ofy10s0pHD8cY0DbYH4dol3Fv38CRbYAcjd9gXUSc/edit" target="_blank">Abrir documento</a>
+    </div>
+
+    <div class="doc-card">
+      <div class="doc-type">Priorização · Google Sheets</div>
+      <div class="doc-name">Matriz de Priorização de Projetos IA</div>
+      <div class="doc-desc">Planilha para ranquear projetos por impacto, repetitividade, ganho em horas, facilidade e dependência criativa. Alimentada via formulário de pesquisa.</div>
+      <a class="doc-link" href="https://docs.google.com/spreadsheets/d/1l1XCpVgwCWPG8EJFKUcjkhH_Hj_R-rmx5c2JDyQ2aqQ/edit" target="_blank">Abrir planilha</a>
+    </div>
+
+    <div class="doc-card">
+      <div class="doc-type">Pesquisa · Google Forms</div>
+      <div class="doc-name">Formulário de Problemas por Área</div>
+      <div class="doc-desc">3 perguntas obrigatórias + 1 opcional. Identifica tarefas repetitivas, tempo perdido e potencial de automação. Base para priorizar os primeiros projetos.</div>
+      <a class="doc-link" href="https://docs.google.com/forms/d/e/1FAIpQLSdOxxBxywSf-2Gq9AjffFRpv0C8sDUdgbBirYWOQsDnitRMTg/viewform" target="_blank">Abrir formulário</a>
+    </div>
+
+    <div class="doc-card">
+      <div class="doc-type">Prompt Bank · GitHub Pages</div>
+      <div class="doc-name">ℓiⱴε Prompt Bank — Live</div>
+      <div class="doc-desc">Banco de prompts por área com busca, filtros e exportação CSV. 11 prompts iniciais em 8 áreas. Atualizado quinzenalmente pelo Comitê.</div>
+      <a class="doc-link" href="https://lucaspolato-art.github.io/live-ai-hub/" target="_blank">Abrir Prompt Bank</a>
+    </div>
+
+    <div class="doc-card" style="border: 1px dashed var(--gray3);">
+      <div class="doc-type">Repositório · GitHub</div>
+      <div class="doc-name">live-ai-hub — Repositório do projeto</div>
+      <div class="doc-desc">Código-fonte do Prompt Bank, JSONs de prompts por área e documentação técnica. Contribuições via Pull Request ou canal #ai-prompts no Slack.</div>
+      <a class="doc-link" href="https://github.com/lucaspolato-art/live-ai-hub" target="_blank">Abrir no GitHub</a>
+    </div>
+
+    <div class="doc-card" style="border: 1px dashed var(--gray3);">
+      <div class="doc-type">Apresentação · Este HTML</div>
+      <div class="doc-name">Kickoff Presentation — IA Committee</div>
+      <div class="doc-desc">Esta apresentação. Usada no kickoff de 24/06 para alinhar todos os tiers sobre objetivos, estrutura, roadmap e próximos passos.</div>
+      <div class="doc-link" style="color:var(--gray3); cursor:default;">Você está aqui ↗</div>
+    </div>
+
+    <div class="doc-card" style="border: 1px dashed var(--gray3);">
+      <div class="doc-type">Em construção · Notion</div>
+      <div class="doc-name">Trilha Básica — Manual de IA da Live</div>
+      <div class="doc-desc">Conteúdo do módulo básico construído ao vivo por Polato e Mariana. Gravado via Loom. Ficará disponível para toda a agência. Entrega: Junho.</div>
+      <div class="doc-link" style="color:var(--gray3); cursor:default;">Em breve ↗</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 06. BOAS PRÁTICAS CLAUDE -->
+<section id="claude">
+  <div class="sec-header">
+    <span class="sec-num">06</span>
+    <h2>Boas práticas com o <em>Claude</em></h2>
+  </div>
+
+  <p style="font-size:14px; color:var(--white2); max-width:680px; line-height:1.7; margin-bottom:36px;">
+    O Claude Enterprise está disponível para todos os tiers 1 e 2. Para extrair o melhor dele — e evitar os erros mais comuns — siga esses princípios. 
+    <strong style="color:var(--yellow)">Regra de ouro: use o Claude para tarefas da Live, não para uso pessoal.</strong> O acesso é corporativo e o histórico fica registrado no workspace da agência.
+  </p>
+
+  <div class="boas-grid">
+
+    <div class="boa-card">
+      <div class="boa-num">01</div>
+      <div class="boa-title">Contexto é tudo</div>
+      <div class="boa-desc">Sempre diga quem você é, para quem é o cliente, qual o objetivo da tarefa e o formato esperado. Claude sem contexto é calculadora sem botões.</div>
+    </div>
+
+    <div class="boa-card">
+      <div class="boa-num">02</div>
+      <div class="boa-title">Use os Projects</div>
+      <div class="boa-desc">Crie um Project por cliente ou área no Claude Enterprise. Isso mantém o contexto, os prompts e os documentos do cliente sempre carregados — sem repetir briefing toda vez.</div>
+    </div>
+
+    <div class="boa-card">
+      <div class="boa-num">03</div>
+      <div class="boa-title">Documente seus prompts</div>
+      <div class="boa-desc">Quando um prompt funcionar bem, salve no banco de prompts da agência. Conhecimento coletivo > reinventar a roda todo dia. O Prompt Bank é nosso ativo mais importante.</div>
+    </div>
+
+    <div class="boa-card">
+      <div class="boa-num">04</div>
+      <div class="boa-title">Revise sempre</div>
+      <div class="boa-desc">Claude é um co-piloto, não o piloto. Toda entrega ao cliente passa pelo seu olho crítico primeiro. Ele acelera — a curadoria e o julgamento ainda são seus.</div>
+    </div>
+
+    <div class="boa-card">
+      <div class="boa-num">05</div>
+      <div class="boa-title">Escale em iterações</div>
+      <div class="boa-desc">Comece simples: peça uma versão, avalie, ajuste, peça outra. Prompt longo de primeira não é sinal de expertise — é sinal de desespero. Vá refinando.</div>
+    </div>
+
+    <div class="boa-card">
+      <div class="boa-num">06</div>
+      <div class="boa-title">Use para tarefas da Live</div>
+      <div class="boa-desc">O acesso é corporativo. Briefs de cliente, relatórios, análises de dados, estratégias, processos internos — tudo certo. Receitas de bolo e viagens pessoais — no seu Claude pessoal. 🧑‍🍳</div>
+    </div>
+
+    <div class="boa-card">
+      <div class="boa-num">07</div>
+      <div class="boa-title">Não coloque dados sensíveis</div>
+      <div class="boa-desc">Dados pessoais de consumidores, contratos em negociação, dados financeiros detalhados — sempre valide com o TI antes de colar qualquer coisa no chat.</div>
+    </div>
+
+    <div class="boa-card">
+      <div class="boa-num">08</div>
+      <div class="boa-title">Compartilhe o que aprender</div>
+      <div class="boa-desc">Achou um jeito incrível de usar IA pra resolver um problema da área? Joga no canal do Comitê no Slack. O AI News Flash existe pra isso. Aprendizado coletivo > herói solo.</div>
+    </div>
+
+    <div class="boa-card">
+      <div class="boa-num">09</div>
+      <div class="boa-title">Prompts por área da Live</div>
+      <div class="boa-desc"><strong style="color:var(--yellow)">Atendimento:</strong> briefs e atas · <strong style="color:var(--yellow)">BI:</strong> análise e relatórios · <strong style="color:var(--yellow)">Social:</strong> legendas e calendários · <strong style="color:var(--yellow)">Mídia:</strong> análise de performance · <strong style="color:var(--yellow)">Criação:</strong> conceitos e referências · <strong style="color:var(--yellow)">Ops:</strong> processos e checklists</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 07. PRÓXIMOS PASSOS -->
+<section id="proximos">
+  <div class="sec-header">
+    <span class="sec-num">07</span>
+    <h2>Próximos <em>passos</em></h2>
+  </div>
+
+  <div class="steps-list">
+
+    <div class="step-item">
+      <div class="step-num">01</div>
+      <div class="step-content">
+        <h3>Hoje — Kickoff 24/06</h3>
+        <p>Alinhamento geral da estratégia, apresentação dos tiers, distribuição de acessos ao Claude Enterprise e coleta das primeiras impressões.</p>
+        <ul>
+          <li>11h00–11h40 · Tier 1 + Tier 2 (Google Meet)</li>
+          <li>11h40–12h00 · Abertura para Tier 3</li>
+          <li>Distribuição de acessos pendentes (Mariana, Bruno Lanzo e Tier 2)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step-item">
+      <div class="step-num">02</div>
+      <div class="step-content">
+        <h3>Semana 1 — Formulário de Problemas</h3>
+        <p>Todos os membros dos 3 tiers preenchem o formulário de pesquisa por área. É a matéria-prima da nossa matriz de priorização — quanto mais detalhe, melhor o ranking.</p>
+        <ul>
+          <li>Preencher o <a href="https://docs.google.com/forms/d/e/1FAIpQLSdOxxBxywSf-2Gq9AjffFRpv0C8sDUdgbBirYWOQsDnitRMTg/viewform" style="color:var(--yellow)">formulário de problemas por área</a></li>
+          <li>Cada tarefa = 1 preenchimento (pode enviar mais de um)</li>
+          <li>Tier 1 valida os resultados agregados</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step-item">
+      <div class="step-num">03</div>
+      <div class="step-content">
+        <h3>Semana 1–2 — Trilha Básica</h3>
+        <p>Sessão inaugural da Trilha Básica conduzida por Polato e Mariana. Gravada via Loom e disponibilizada no Notion para toda a agência. Custo zero.</p>
+        <ul>
+          <li>Módulo 1: O que é IA e como funciona (sem medo)</li>
+          <li>Módulo 2: Prompt engineering básico — como perguntar certo</li>
+          <li>Módulo 3: Ferramentas por função (criação, dados, texto, imagem)</li>
+          <li>Módulo 4: Projeto prático por área</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step-item">
+      <div class="step-num">04</div>
+      <div class="step-content">
+        <h3>Julho — Pilotos Reais</h3>
+        <p>Com a matriz de priorização preenchida, o board define os 3 primeiros projetos piloto. Foco em Operações, Atendimento e BI — onde o impacto é mais rápido e mensurável.</p>
+        <ul>
+          <li>Aprovação da matriz pelo Tier 1</li>
+          <li>Designação de responsável por piloto</li>
+          <li>Início das trilhas intermediária e avançada (Udemy + NoCode Startup)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step-item">
+      <div class="step-num">05</div>
+      <div class="step-content">
+        <h3>Agosto — ROI e Expansão</h3>
+        <p>Documentação dos primeiros resultados. Apresentação de ROI para o board com o banco de tempo por projeto. Expansão para Criação, Social e Mídia. Primeiras propostas com linha IA.</p>
+        <ul>
+          <li>Meta: 1 projeto documentado por semana</li>
+          <li>Apresentação para board: quanto economizamos em horas</li>
+          <li>Primeiras propostas comerciais com serviço de agente IA</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 08. INFRAESTRUTURA IA -->
+<section id="infra">
+  <div class="sec-header">
+    <span class="sec-num">08</span>
+    <h2>Infraestrutura <em>IA Live</em></h2>
+  </div>
+
+  <p style="font-size:14px; color:var(--white2); max-width:700px; line-height:1.7; margin-bottom:36px;">
+    Além das ferramentas do dia a dia, estamos construindo uma camada de infraestrutura própria que vai conectar todas as áreas, clientes e projetos. Cada peça alimenta a próxima — como um sistema nervoso da agência.
+  </p>
+
+  <div class="infra-grid">
+
+    <div class="infra-card">
+      <div class="infra-icon">🗃️</div>
+      <div class="infra-label">Fase 1 · Live</div>
+      <div class="infra-title">Prompt Bank — Banco de Prompts</div>
+      <div class="infra-desc">Repositório central com prompts por área (atendimento, BI, criação, social, mídia, ops e mais). Busca, filtros, tags e export CSV. Conhecimento coletivo da agência — ninguém reinventa a roda.</div>
+      <span class="infra-status status-live">✓ Construído</span>
+    </div>
+
+    <div class="infra-card">
+      <div class="infra-icon">🔁</div>
+      <div class="infra-label">Fase 1.5 · Live</div>
+      <div class="infra-title">Mapa de Operação + Fluxograma Interativo</div>
+      <div class="infra-desc">Fluxo completo da operação da Live com gargalos mapeados (🟢🟡🔴), onde a IA entra em cada etapa, painéis clicáveis por área e 4 views: fluxo completo, só gargalos, onde entra IA, roadmap. Veja e comente abaixo.</div>
+      <span class="infra-status status-live">✓ Construído</span>
+    </div>
+
+    <div class="infra-card">
+      <div class="infra-icon">🧠</div>
+      <div class="infra-label">Fase 1.5 · Live</div>
+      <div class="infra-title">Mapeamento Coletivo por Área</div>
+      <div class="infra-desc">Ferramenta onde cada área preenche: status atual, gargalos, oportunidades de IA e o que deve sempre ficar humano. Respostas viram mapa em tempo real com filtros e exportação. Integrada à Fase 2.</div>
+      <span class="infra-status status-live">✓ Construído</span>
+    </div>
+
+    <div class="infra-card">
+      <div class="infra-icon">📦</div>
+      <div class="infra-label">Fase 2 · Em construção</div>
+      <div class="infra-title">Banco de Dados por Cliente</div>
+      <div class="infra-desc">Base estruturada por cliente: brand guide, histórico de aprovações/rejeições, assets produzidos e dados de performance. QA automático antes de qualquer entrega. Hospedado no servidor da Live.</div>
+      <span class="infra-status status-building">⚡ Construindo</span>
+    </div>
+
+    <div class="infra-card">
+      <div class="infra-icon">🪪</div>
+      <div class="infra-label">Fase 2 · Em construção</div>
+      <div class="infra-title">Guias de Prompt Enterprise por Conta</div>
+      <div class="infra-desc">Cada usuário do Claude Enterprise terá duas camadas de contexto: uma pública Live (clientes, regras, referências) e uma privada por função. Memória da agência sempre carregada, sem vazamento entre contas.</div>
+      <span class="infra-status status-building">⚡ Construindo</span>
+    </div>
+
+    <div class="infra-card">
+      <div class="infra-icon">📊</div>
+      <div class="infra-label">Fase 3 · Planejado</div>
+      <div class="infra-title">Capacity + Financial Dashboard</div>
+      <div class="infra-desc">Integração entre capacidade operacional e dados financeiros. Responde: "quanto custa uma hora de agente IA vs hora humana?" e "qual área tem mais headroom pra crescer?". Meta: fim de 2026.</div>
+      <span class="infra-status status-next">→ Planejado</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- 09. MAPA INTERATIVO DA OPERAÇÃO -->
+<section id="mapa">
+  <div class="sec-header">
+    <span class="sec-num">09</span>
+    <h2>Mapa da <em>Operação</em> — veja e comente</h2>
+  </div>
+
+  <p style="font-size:14px; color:var(--white2); max-width:700px; line-height:1.7; margin-bottom:8px;">
+    Este é o fluxo completo da Live mapeado com gargalos reais. Clique em qualquer área para ver oportunidades de IA, status atual e onde você pode contribuir. O próximo passo é que cada área <strong style="color:var(--white)">valide, ajuste e adicione</strong> o que está faltando.
+  </p>
+
+  <div style="display:flex; gap:16px; align-items:center; margin-bottom:24px; flex-wrap:wrap;">
+    <div style="display:flex; align-items:center; gap:6px; font-family:'Space Mono',monospace; font-size:10px; color:#00e676;">
+      <div style="width:24px; height:3px; background:#00e676;"></div> Fluindo bem
+    </div>
+    <div style="display:flex; align-items:center; gap:6px; font-family:'Space Mono',monospace; font-size:10px; color:var(--yellow);">
+      <div style="width:24px; height:3px; background:var(--yellow);"></div> Gargalo moderado
+    </div>
+    <div style="display:flex; align-items:center; gap:6px; font-family:'Space Mono',monospace; font-size:10px; color:#ff6b8a;">
+      <div style="width:24px; height:3px; background:#ff1744;"></div> Gargalo crítico
+    </div>
+    <div style="display:flex; align-items:center; gap:6px; font-family:'Space Mono',monospace; font-size:10px; color:var(--white2);">
+      <div style="width:24px; height:3px; background:var(--gray3);"></div> A mapear
+    </div>
+  </div>
+
+  <div class="mapa-tabs">
+    <button class="mapa-tab active" onclick="showPanel('fluxo')">🔁 Fluxo Completo</button>
+    <button class="mapa-tab" onclick="showPanel('gargalos')">🔴 Só Gargalos</button>
+    <button class="mapa-tab" onclick="showPanel('ia')">🤖 Onde entra IA</button>
+  </div>
+
+  <!-- PANEL: FLUXO -->
+  <div id="panel-fluxo" class="mapa-panel active">
+    <div class="area-grid">
+      <div class="area-card has-note" onclick="openModal('atendimento')">
+        <div class="area-status-bar bar-yellow"></div>
+        <div class="area-name">Atendimento</div>
+        <div class="area-opp">Briefs, atas, alinhamentos, gestão de expectativas</div>
+        <span class="area-tag tag-watch">🟡 Gargalo moderado</span>
+      </div>
+      <div class="area-card has-note" onclick="openModal('projetos')">
+        <div class="area-status-bar bar-red"></div>
+        <div class="area-name">Projetos / Ops</div>
+        <div class="area-opp">Timelines, Monday.com, aprovações, entregas</div>
+        <span class="area-tag tag-hot">🔴 Gargalo crítico</span>
+      </div>
+      <div class="area-card has-note" onclick="openModal('criacao')">
+        <div class="area-status-bar bar-yellow"></div>
+        <div class="area-name">Criação</div>
+        <div class="area-opp">Conceituação, referências, variações, copy</div>
+        <span class="area-tag tag-watch">🟡 Gargalo moderado</span>
+      </div>
+      <div class="area-card has-note" onclick="openModal('social')">
+        <div class="area-status-bar bar-yellow"></div>
+        <div class="area-name">Social Media</div>
+        <div class="area-opp">Calendários, legendas, assets, agendamento</div>
+        <span class="area-tag tag-watch">🟡 Gargalo moderado</span>
+      </div>
+      <div class="area-card has-note" onclick="openModal('midia')">
+        <div class="area-status-bar bar-red"></div>
+        <div class="area-name">Mídia</div>
+        <div class="area-opp">Planejamento, performance, relatórios, buy</div>
+        <span class="area-tag tag-hot">🔴 Gargalo crítico</span>
+      </div>
+      <div class="area-card has-note" onclick="openModal('bi')">
+        <div class="area-status-bar bar-yellow"></div>
+        <div class="area-name">BI & Insights</div>
+        <div class="area-opp">Relatórios, análises, painéis, cultura data</div>
+        <span class="area-tag tag-watch">🟡 Gargalo moderado</span>
+      </div>
+      <div class="area-card has-note" onclick="openModal('influs')">
+        <div class="area-status-bar bar-red"></div>
+        <div class="area-name">Influenciadores</div>
+        <div class="area-opp">Briefing, contratação, resultados, creator economy</div>
+        <span class="area-tag tag-hot">🔴 Gargalo crítico</span>
+      </div>
+      <div class="area-card" onclick="openModal('trafego')">
+        <div class="area-status-bar bar-yellow"></div>
+        <div class="area-name">Tráfego</div>
+        <div class="area-opp">Campanhas pagas, otimização, copies, targeting</div>
+        <span class="area-tag tag-watch">🟡 Gargalo moderado</span>
+      </div>
+      <div class="area-card" onclick="openModal('mkt')">
+        <div class="area-status-bar bar-gray"></div>
+        <div class="area-name">Mkt & Aquisição</div>
+        <div class="area-opp">New biz, propostas, prospecção, posicionamento</div>
+        <span class="area-tag" style="background:rgba(100,100,100,0.2);color:var(--white2);">A mapear</span>
+      </div>
+      <div class="area-card" onclick="openModal('financeiro')">
+        <div class="area-status-bar bar-red"></div>
+        <div class="area-name">Financeiro</div>
+        <div class="area-opp">Fechamento mensal, NFs, relatórios, controles</div>
+        <span class="area-tag tag-hot">🔴 Gargalo crítico</span>
+      </div>
+      <div class="area-card" onclick="openModal('pessoas')">
+        <div class="area-status-bar bar-green"></div>
+        <div class="area-name">Pessoas / RH</div>
+        <div class="area-opp">Onboarding, avaliação, cultura, comunicação interna</div>
+        <span class="area-tag tag-ok">🟢 Fluindo</span>
+      </div>
+      <div class="area-card" onclick="openModal('ti')">
+        <div class="area-status-bar bar-green"></div>
+        <div class="area-name">TI / Infra</div>
+        <div class="area-opp">Infra, servidor, acessos, automações técnicas</div>
+        <span class="area-tag tag-ok">🟢 Fluindo</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL: GARGALOS -->
+  <div id="panel-gargalos" class="mapa-panel">
+    <div class="area-grid">
+      <div class="area-card has-note" onclick="openModal('projetos')">
+        <div class="area-status-bar bar-red"></div>
+        <div class="area-name">Projetos / Ops</div>
+        <div class="area-opp">Timelines, Monday.com, aprovações — sem automação nenhuma ainda</div>
+        <span class="area-tag tag-hot">🔴 Prioridade 1</span>
+      </div>
+      <div class="area-card has-note" onclick="openModal('midia')">
+        <div class="area-status-bar bar-red"></div>
+        <div class="area-name">Mídia</div>
+        <div class="area-opp">Relatórios manuais toda semana — maior oportunidade de ganho em horas</div>
+        <span class="area-tag tag-hot">🔴 Prioridade 2</span>
+      </div>
+      <div class="area-card has-note" onclick="openModal('influs')">
+        <div class="area-status-bar bar-red"></div>
+        <div class="area-name">Influenciadores</div>
+        <div class="area-opp">Pesquisa de criadores, briefing e compilação de resultados ainda 100% manual</div>
+        <span class="area-tag tag-hot">🔴 Prioridade 3</span>
+      </div>
+      <div class="area-card" onclick="openModal('financeiro')">
+        <div class="area-status-bar bar-red"></div>
+        <div class="area-name">Financeiro</div>
+        <div class="area-opp">Fechamento mensal lento, NFs, conciliação — alto custo de tempo</div>
+        <span class="area-tag tag-hot">🔴 Prioridade 4</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL: ONDE ENTRA IA -->
+  <div id="panel-ia" class="mapa-panel">
+    <div class="area-grid">
+      <div class="area-card" onclick="openModal('atendimento')">
+        <div class="area-status-bar bar-yellow"></div>
+        <div class="area-name">Atendimento</div>
+        <div class="area-opp">→ Geração de briefings automáticos<br>→ Atas de reunião via transcrição<br>→ Status reports para clientes</div>
+        <span class="area-tag tag-watch">Rápido de implementar</span>
+      </div>
+      <div class="area-card" onclick="openModal('bi')">
+        <div class="area-status-bar bar-yellow"></div>
+        <div class="area-name">BI & Insights</div>
+        <div class="area-opp">→ Análise automática de dados<br>→ Relatórios narrativos<br>→ Heineken Listener como modelo</div>
+        <span class="area-tag tag-watch">Case real em andamento</span>
+      </div>
+      <div class="area-card" onclick="openModal('midia')">
+        <div class="area-status-bar bar-red"></div>
+        <div class="area-name">Mídia</div>
+        <div class="area-opp">→ Relatórios de performance automatizados<br>→ Análise de campanhas<br>→ Agente de media buying</div>
+        <span class="area-tag tag-hot">Maior ROI potencial</span>
+      </div>
+      <div class="area-card" onclick="openModal('social')">
+        <div class="area-status-bar bar-yellow"></div>
+        <div class="area-name">Social Media</div>
+        <div class="area-opp">→ Copy de legendas em lote<br>→ Calendário de conteúdo<br>→ Variações para testes A/B</div>
+        <span class="area-tag tag-watch">Ganho de velocidade</span>
+      </div>
+      <div class="area-card" onclick="openModal('projetos')">
+        <div class="area-status-bar bar-red"></div>
+        <div class="area-name">Projetos / Ops</div>
+        <div class="area-opp">→ Criação de timelines no Monday<br>→ Automação de aprovações<br>→ Checklists por tipo de job</div>
+        <span class="area-tag tag-hot">Alta repetitividade</span>
+      </div>
+      <div class="area-card" onclick="openModal('influs')">
+        <div class="area-status-bar bar-red"></div>
+        <div class="area-name">Influenciadores</div>
+        <div class="area-opp">→ Research de criadores<br>→ Briefing gerado via IA<br>→ Compilação de resultados</div>
+        <span class="area-tag tag-hot">100% manual hoje</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA CONTRIBUIÇÃO AO MAPA -->
+  <div style="margin-top:24px; padding:24px 28px; background:var(--gray); border-left:3px solid var(--yellow);">
+    <p style="font-family:'Space Mono',monospace; font-size:11px; color:var(--yellow); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:8px;">👋 Este mapa é seu também</p>
+    <p style="font-size:14px; color:var(--white2); margin-bottom:16px; line-height:1.6;">Viu algo errado? Falta sua área? Tem uma oportunidade que não está aqui? <strong style="color:var(--white)">Preencha o formulário de mapeamento por área</strong> — suas respostas entram direto aqui.</p>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdOxxBxywSf-2Gq9AjffFRpv0C8sDUdgbBirYWOQsDnitRMTg/viewform" target="_blank" class="cta-btn cta-primary" style="font-size:10px; padding:10px 20px; display:inline-block; text-decoration:none;">Contribuir com minha área ↗</a>
+  </div>
+</section>
+
+<!-- MODAL DO MAPA -->
+<div id="area-modal" class="area-modal" onclick="closeModal(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="document.getElementById('area-modal').classList.remove('open')">✕</button>
+    <div class="modal-title" id="modal-title">Área</div>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<!-- 10. CONTRIBUA -->
+<section id="contribua">
+  <div class="sec-header">
+    <span class="sec-num">10</span>
+    <h2>Como você pode <em>contribuir</em></h2>
+  </div>
+
+  <div class="contrib-hero">
+    <p>Este projeto só funciona se for <strong>de todo mundo</strong>, não só de Polato e Mariana. Você não precisa saber nada de IA pra contribuir agora — só precisa saber onde dói na sua área. O resto a gente resolve junto.</p>
+    <div class="contrib-cta-group">
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSdOxxBxywSf-2Gq9AjffFRpv0C8sDUdgbBirYWOQsDnitRMTg/viewform" target="_blank" class="cta-btn cta-primary">📋 Formulário de problemas por área</a>
+      <a href="https://docs.google.com/spreadsheets/d/1l1XCpVgwCWPG8EJFKUcjkhH_Hj_R-rmx5c2JDyQ2aqQ/edit" target="_blank" class="cta-btn cta-secondary">📊 Ver matriz de priorização</a>
+    </div>
+  </div>
+
+  <div class="contrib-ways">
+    <div class="contrib-card">
+      <div class="contrib-icon">🔍</div>
+      <div class="contrib-ctitle">Identifique dores</div>
+      <div class="contrib-cdesc">Qual tarefa da sua área você faz toda semana e sente que poderia ser mais rápida? Quanto tempo leva? É repetitiva? Preencha o formulário — 5 minutos. Cada resposta vira um candidato a projeto.</div>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSdOxxBxywSf-2Gq9AjffFRpv0C8sDUdgbBirYWOQsDnitRMTg/viewform" target="_blank" class="contrib-clink">→ Abrir formulário</a>
+    </div>
+    <div class="contrib-card">
+      <div class="contrib-icon">🗺️</div>
+      <div class="contrib-ctitle">Valide o mapa</div>
+      <div class="contrib-cdesc">O fluxograma acima tem erros? Falta alguma etapa do seu processo? Clique nas áreas e veja se o que está descrito faz sentido. Manda uma mensagem no canal do comitê com o que está errado.</div>
+      <a href="#mapa" class="contrib-clink">→ Ver mapa da operação</a>
+    </div>
+    <div class="contrib-card">
+      <div class="contrib-icon">💡</div>
+      <div class="contrib-ctitle">Traga ideias</div>
+      <div class="contrib-cdesc">Viu uma ferramenta de IA que poderia resolver um problema real da Live? Testou algo e funcionou? Joga no canal #comite-ia no Slack. O AI News Flash semanal existe pra isso. Aprendizado coletivo bate herói solo.</div>
+      <a href="#" class="contrib-clink">→ Canal no Slack</a>
+    </div>
+    <div class="contrib-card">
+      <div class="contrib-icon">🧪</div>
+      <div class="contrib-ctitle">Seja piloto</div>
+      <div class="contrib-cdesc">Quando os projetos piloto forem definidos em Julho, cada um precisará de um responsável na área. Não precisa ser expert — precisa querer testar, documentar e reportar. Se topa, avisa o Polato ou a Mari.</div>
+      <a href="mailto:lucas.polato@livetheagency.com" class="contrib-clink">→ Falar com Polato</a>
+    </div>
+    <div class="contrib-card">
+      <div class="contrib-icon">📝</div>
+      <div class="contrib-ctitle">Salve seus prompts</div>
+      <div class="contrib-cdesc">Usou o Claude e achou um prompt que funcionou muito bem pra alguma tarefa da agência? Não guarda só pra você. Manda pro Prompt Bank. Vai virar referência pra todo mundo na Live.</div>
+      <a href="https://lucaspolato-art.github.io/live-ai-hub/" target="_blank" class="contrib-clink">→ Acessar Prompt Bank</a>
+    </div>
+    <div class="contrib-card">
+      <div class="contrib-icon">🎓</div>
+      <div class="contrib-ctitle">Faça a trilha</div>
+      <div class="contrib-cdesc">A Trilha Básica é para todo mundo. A Intermediária e a Avançada são para quem quer ir mais fundo. Quanto mais gente formada, mais projetos conseguimos rodar em paralelo. A Live paga a formação.</div>
+      <a href="#roadmap" class="contrib-clink">→ Ver trilhas de formação</a>
+    </div>
+  </div>
+</section>
+
+<!-- JS DO MAPA -->
+<script>
+const areaData = {
+  atendimento: {
+    title: 'Atendimento',
+    rows: [
+      ['Status', '🟡 Gargalo moderado — muito tempo em briefs e atas manuais'],
+      ['Maior dor', 'Briefings incompletos chegam pra criação, gerando retrabalho'],
+      ['IA pode', 'Gerar brief estruturado a partir de call transcrita, automatizar ata e status report semanal ao cliente'],
+      ['Fica humano', 'Relacionamento, gestão de crise, negociação, alinhamentos estratégicos'],
+      ['Urgência', '⭐⭐⭐ Alta — impacto direto na velocidade de toda a operação'],
+      ['Responsável', 'Priscila Penachio + Breno Assumpção (Tier 3)'],
+    ]
+  },
+  projetos: {
+    title: 'Projetos / Operações',
+    rows: [
+      ['Status', '🔴 Gargalo crítico — gestão manual, aprovações lentas, Monday.com subutilizado'],
+      ['Maior dor', 'Criar timelines e checklists do zero pra cada job. Aprovações perdidas no WhatsApp.'],
+      ['IA pode', 'Criar timelines automáticas por tipo de job, automação de aprovações no Monday.com, checklists inteligentes, relatório de status automático'],
+      ['Fica humano', 'Priorização estratégica, negociação de prazos, gestão de conflitos'],
+      ['Urgência', '⭐⭐⭐⭐⭐ Crítica — afeta todas as áreas'],
+      ['Responsável', 'Sté Alves + Duda Monteiro (Tier 2)'],
+    ]
+  },
+  criacao: {
+    title: 'Criação',
+    rows: [
+      ['Status', '🟡 Gargalo moderado — muito tempo em variações e ajustes'],
+      ['Maior dor', 'Gerar múltiplas variações de peça para aprovação consome muito tempo criativo'],
+      ['IA pode', 'Geração de referências visuais, variações de copy, briefing criativo estruturado, revisão de coerência com brand guide'],
+      ['Fica humano', 'Conceituação, direção de arte, tomada criativa, julgamento estético final'],
+      ['Urgência', '⭐⭐⭐ Alta'],
+      ['Responsável', 'Bruno Lanzo + Thamara / Felipe Banjo (Tier 3)'],
+    ]
+  },
+  social: {
+    title: 'Social Media',
+    rows: [
+      ['Status', '🟡 Gargalo moderado — volume alto de conteúdo, processo ainda linear'],
+      ['Maior dor', 'Produção de calendários e legendas para vários clientes ao mesmo tempo'],
+      ['IA pode', 'Copy de legenda em lote por cliente, geração de calendário, variações para A/B, análise de engajamento com sugestão de ajuste'],
+      ['Fica humano', 'Tom de voz, posicionamento cultural, resposta a comentários sensíveis'],
+      ['Urgência', '⭐⭐⭐ Alta'],
+      ['Responsável', 'Bruno Lanzo + Luisa / Murilo (Tier 2)'],
+    ]
+  },
+  midia: {
+    title: 'Mídia',
+    rows: [
+      ['Status', '🔴 Gargalo crítico — relatórios semanais 100% manuais, alto custo de tempo'],
+      ['Maior dor', 'Consolidar dados de múltiplas plataformas todo semana pra fazer 1 relatório'],
+      ['IA pode', 'Relatório de performance automático, análise de campanhas, sugestão de otimização, agente de media buying (fase 3)'],
+      ['Fica humano', 'Estratégia de mídia, relacionamento com veículos, decisão de investimento'],
+      ['Urgência', '⭐⭐⭐⭐⭐ Crítica — ROI mais alto de todos os projetos'],
+      ['Responsável', 'Polato + a definir no Tier 2'],
+    ]
+  },
+  bi: {
+    title: 'BI & Insights',
+    rows: [
+      ['Status', '🟡 Gargalo moderado — análises demoradas, relatórios narrativos manuais'],
+      ['Maior dor', 'Transformar dados brutos em narrativa de relatório consome muito tempo'],
+      ['IA pode', 'Análise automática de datasets, geração de narrativa de relatório, alerta de anomalias, Heineken Listener como modelo escalável'],
+      ['Fica humano', 'Interpretação estratégica, contexto cultural, recomendações de negócio'],
+      ['Urgência', '⭐⭐⭐⭐ Alta — case Heineken já em andamento'],
+      ['Responsável', 'Polato + Erick Melo + Guilherme Motta (Tier 3)'],
+    ]
+  },
+  influs: {
+    title: 'Influenciadores / Creator Economy',
+    rows: [
+      ['Status', '🔴 Gargalo crítico — pesquisa, briefing e compilação de resultados 100% manuais'],
+      ['Maior dor', 'Pesquisa de criadores pra cada campanha começa do zero. Compilar resultados pós-campanha é demorado.'],
+      ['IA pode', 'Research de criadores por perfil e audiência, geração de briefing, compilação automatizada de resultados, análise de fit cultural'],
+      ['Fica humano', 'Relacionamento com criadores, negociação, curadoria final de perfis, direção criativa'],
+      ['Urgência', '⭐⭐⭐⭐ Alta — diferencial competitivo'],
+      ['Responsável', 'Polato + Maria Eduarda (Tier 3)'],
+    ]
+  },
+  trafego: {
+    title: 'Tráfego',
+    rows: [
+      ['Status', '🟡 Gargalo moderado — copies e variações ainda manuais'],
+      ['Maior dor', 'Criar variações de copy pra testes A/B é demorado quando se tem muitas campanhas simultâneas'],
+      ['IA pode', 'Geração de copies por objetivo e audiência, análise de performance e sugestão de otimização, targeting inteligente'],
+      ['Fica humano', 'Estratégia de campanha, interpretação de resultados, decisão de orçamento'],
+      ['Urgência', '⭐⭐⭐ Alta'],
+      ['Responsável', 'A definir — preencha o formulário'],
+    ]
+  },
+  mkt: {
+    title: 'Marketing & Aquisição',
+    rows: [
+      ['Status', '⚪ A mapear — precisamos do input da área'],
+      ['Maior dor', 'Não mapeada ainda — preencha o formulário de mapeamento por área'],
+      ['IA pode', 'Potencialmente: geração de propostas, prospecção assistida, posicionamento de new biz'],
+      ['Fica humano', 'Relacionamento comercial, apresentações, negociação'],
+      ['Urgência', 'Definir após mapeamento'],
+      ['Responsável', 'Bruno Poiani + Ana Beatriz (Tier 2)'],
+    ]
+  },
+  financeiro: {
+    title: 'Financeiro',
+    rows: [
+      ['Status', '🔴 Gargalo crítico — fechamento mensal demorado, NFs manuais'],
+      ['Maior dor', 'Conciliação financeira e emissão de NFs consome dias por mês'],
+      ['IA pode', 'Automação de fechamento, alertas de inadimplência, relatório financeiro automático, categorização de despesas'],
+      ['Fica humano', 'Decisões estratégicas de investimento, negociações, planejamento'],
+      ['Urgência', '⭐⭐⭐⭐ Alta'],
+      ['Responsável', 'Mário Ferreira + Arthur Pinheiro (Tier 2)'],
+    ]
+  },
+  pessoas: {
+    title: 'Pessoas / RH',
+    rows: [
+      ['Status', '🟢 Fluindo bem — mas tem oportunidades de ganho'],
+      ['Maior dor', 'Onboarding de novas pessoas ainda depende muito de processos manuais'],
+      ['IA pode', 'Onboarding automático, comunicação interna personalizada, análise de clima, materiais de treinamento'],
+      ['Fica humano', 'Cultura, feedbacks, desenvolvimento de pessoas, relacionamentos'],
+      ['Urgência', '⭐⭐ Moderada — não é prioridade 1'],
+      ['Responsável', 'Naira Fanzeres + Bruna Spiti (Tier 2)'],
+    ]
+  },
+  ti: {
+    title: 'TI / Infraestrutura',
+    rows: [
+      ['Status', '🟢 Fluindo — área estratégica para hospedar os projetos de IA'],
+      ['Maior dor', 'Suporte reativo, documentação de infra incompleta'],
+      ['IA pode', 'Documentação automática, triagem de chamados, automações de infra, deploy de ferramentas internas'],
+      ['Fica humano', 'Arquitetura de sistemas, decisões de segurança, gestão de acessos'],
+      ['Urgência', '⭐⭐ Moderada — mas é a base de tudo'],
+      ['Responsável', 'Mário Ferreira + Arthur Pinheiro (Tier 2)'],
+    ]
+  }
+};
+
+function showPanel(id) {
+  document.querySelectorAll('.mapa-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.mapa-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function openModal(area) {
+  const d = areaData[area];
+  if (!d) return;
+  document.getElementById('modal-title').textContent = d.title;
+  document.getElementById('modal-content').innerHTML = d.rows.map(r =>
+    `<div class="modal-row"><span class="mlabel">${r[0]}</span><span class="mval">${r[1]}</span></div>`
+  ).join('');
+  document.getElementById('area-modal').classList.add('open');
+}
+
+function closeModal(e) {
+  if (e.target.id === 'area-modal') {
+    document.getElementById('area-modal').classList.remove('open');
+  }
+}
+</script>
+
+<!-- 08. BIBLIOTECA DE PROMPTS -->
+<section id="prompts">
+  <div class="sec-header">
+    <span class="sec-num">08</span>
+    <h2>Biblioteca de <em>Prompts</em></h2>
+  </div>
+
+  <div class="prompt-lib-hero">
+    <div>
+      <p style="margin-bottom:14px;">O <strong style="color:var(--white)">Prompt Bank da Live</strong> é o nosso ativo mais valioso de IA. É uma base centralizada de prompts testados, organizados por área, com busca, filtros e exportação — construída especificamente para a realidade da agência.</p>
+      <p>Sempre que alguém na Live resolver um problema com um bom prompt, ele <strong style="color:var(--white)">não morre naquela conversa</strong>. Vai pro banco, vira conhecimento coletivo, e economiza horas da próxima pessoa que tiver o mesmo desafio. <em style="color:var(--yellow)">Esse é o loop que precisamos criar.</em></p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:10px;">
+      <a class="prompt-lib-btn" href="https://lucaspolato-art.github.io/live-ai-hub/" target="_blank">Acessar Prompt Bank ↗</a>
+      <a class="prompt-lib-btn" href="https://forms.gle/8TWcyNFRnph97Mya8" target="_blank" style="background:transparent; border:1px solid var(--yellow); color:var(--yellow);">+ Contribuir com prompt ↗</a>
+    </div>
+  </div>
+
+  <p style="font-family:'Space Mono',monospace; font-size:10px; color:var(--gray3); text-transform:uppercase; letter-spacing:0.15em; margin-bottom:16px;">11 áreas cobertas — exemplos de prompts por setor</p>
+
+  <div class="prompts-areas">
+    <div class="prompt-area-card">
+      <div class="prompt-area-icon">📣</div>
+      <div class="prompt-area-name">Atendimento</div>
+      <div class="prompt-area-ex"><em>→</em> Ata de reunião formatada<br><em>→</em> Brief de job a partir de briefing caótico<br><em>→</em> E-mail de alinhamento com cliente</div>
+    </div>
+    <div class="prompt-area-card">
+      <div class="prompt-area-icon">🎨</div>
+      <div class="prompt-area-name">Criação</div>
+      <div class="prompt-area-ex"><em>→</em> Conceito criativo a partir do brief<br><em>→</em> Referências visuais com contexto<br><em>→</em> Copy para 5 formatos diferentes</div>
+    </div>
+    <div class="prompt-area-card">
+      <div class="prompt-area-icon">📱</div>
+      <div class="prompt-area-name">Social Media</div>
+      <div class="prompt-area-ex"><em>→</em> Calendário editorial mensal<br><em>→</em> Legenda + CTA por plataforma<br><em>→</em> Análise de comentários e sentimento</div>
+    </div>
+    <div class="prompt-area-card">
+      <div class="prompt-area-icon">📊</div>
+      <div class="prompt-area-name">BI & Insights</div>
+      <div class="prompt-area-ex"><em>→</em> Resumo executivo de relatório<br><em>→</em> Análise de dados de campanha<br><em>→</em> Narrativa de performance para cliente</div>
+    </div>
+    <div class="prompt-area-card">
+      <div class="prompt-area-icon">📡</div>
+      <div class="prompt-area-name">Mídia</div>
+      <div class="prompt-area-ex"><em>→</em> Análise de resultado vs. benchmark<br><em>→</em> Justificativa de investimento por canal<br><em>→</em> Leitura crítica de relatório de veículo</div>
+    </div>
+    <div class="prompt-area-card">
+      <div class="prompt-area-icon">🌟</div>
+      <div class="prompt-area-name">Influenciadores</div>
+      <div class="prompt-area-ex"><em>→</em> Avaliação de perfil por critérios<br><em>→</em> Script de briefing para creator<br><em>→</em> Relatório de campanha com influencer</div>
+    </div>
+    <div class="prompt-area-card">
+      <div class="prompt-area-icon">⚙️</div>
+      <div class="prompt-area-name">Operações</div>
+      <div class="prompt-area-ex"><em>→</em> Checklist de entrega por tipo de job<br><em>→</em> Redistribuição de tarefas urgentes<br><em>→</em> Processo de onboarding de novo cliente</div>
+    </div>
+    <div class="prompt-area-card">
+      <div class="prompt-area-icon">📁</div>
+      <div class="prompt-area-name">Projetos</div>
+      <div class="prompt-area-ex"><em>→</em> Cronograma a partir de escopo<br><em>→</em> Mapeamento de riscos por job<br><em>→</em> Documento de kickoff de projeto</div>
+    </div>
+  </div>
+
+  <div style="margin-top:32px; padding:24px 28px; background:var(--gray); border-left:3px solid var(--yellow);">
+    <p style="font-family:'Space Mono',monospace; font-size:11px; color:var(--yellow); text-transform:uppercase; letter-spacing:0.12em; margin-bottom:10px;">Como contribuir com o banco</p>
+    <p style="font-size:14px; color:var(--white2); line-height:1.7;">Usou um prompt que funcionou bem? <strong style="color:var(--white)">3 passos:</strong> (1) Copie o prompt que funcionou. (2) Cole no canal <a href="https://live-agency.slack.com/channels/ai-prompts" target="_blank" style="color:var(--yellow); text-decoration:none; font-weight:700;">#ai-prompts</a> no Slack com o nome da área e o problema que resolveu. (3) O Tier 2 responsável pela área sobe pro banco na próxima Lab Session. Simples assim.</p>
+  </div>
+</section>
+
+<!-- 09. FASES DO PROJETO IA -->
+<section id="fases">
+  <div class="sec-header">
+    <span class="sec-num">09</span>
+    <h2>As <em>fases</em> do projeto IA</h2>
+  </div>
+
+  <p style="font-size:14px; color:var(--white2); max-width:680px; line-height:1.7; margin-bottom:36px;">
+    O que o comitê está construindo não é só um treinamento — é uma <strong style="color:var(--white)">infraestrutura de inteligência</strong> para a agência. Quatro fases, cada uma construindo em cima da anterior.
+  </p>
+
+  <div class="fases-track">
+    <div class="fase-card active">
+      <div class="fase-badge wip">✅ Fase 1 · Ativo</div>
+      <div class="fase-title">Prompt Bank</div>
+      <div class="fase-desc">Banco de prompts por área, com busca, filtros, CSV export. 11 áreas cobertas. Ritual semanal de atualização. Já existe — já funciona.</div>
+      <div class="fase-status done">Em operação</div>
+    </div>
+    <div class="fase-card active">
+      <div class="fase-badge wip">🔄 Fase 1.5 · Este kickoff</div>
+      <div class="fase-title">Mapeamento de IA por Área</div>
+      <div class="fase-desc">Fluxograma de operação + mapeamento colaborativo de onde cada área pode entrar com IA. É a fase que fazemos agora, juntos.</div>
+      <div class="fase-status wip">Em andamento</div>
+    </div>
+    <div class="fase-card">
+      <div class="fase-badge planned">Fase 2 · Julho</div>
+      <div class="fase-title">Banco por Cliente</div>
+      <div class="fase-desc">Uma base por conta: brand guide, histórico de aprovações e reprovações, assets produzidos, dados de performance. QA automático antes de cada entrega ao cliente.</div>
+      <div class="fase-status">Planejada</div>
+    </div>
+    <div class="fase-card">
+      <div class="fase-badge planned">Fase 3 · Q3</div>
+      <div class="fase-title">Capacity + Finance Dashboard</div>
+      <div class="fase-desc">Visão em tempo real de quem pode pegar o quê. Job só abre se capacity validado. Integração com financeiro para visão de rentabilidade por cliente e job.</div>
+      <div class="fase-status">Planejada</div>
+    </div>
+  </div>
+
+  <div style="margin-top:32px; padding:28px 32px; background:var(--gray); border:1px solid var(--gray2);">
+    <p style="font-family:'Space Mono',monospace; font-size:10px; color:var(--yellow); text-transform:uppercase; letter-spacing:0.12em; margin-bottom:14px;">Fluxo da operação — onde a IA entra</p>
+    <div style="display:grid; grid-template-columns:repeat(7,1fr); gap:2px; text-align:center; background:var(--gray2);">
+      <div style="background:var(--gray); padding:16px 8px;">
+        <div style="font-size:18px; margin-bottom:8px;">📥</div>
+        <div style="font-family:'Space Mono',monospace; font-size:9px; color:var(--yellow); text-transform:uppercase;">Brief</div>
+        <div style="font-size:11px; color:var(--white2); margin-top:6px;">Auto-estruturação</div>
+      </div>
+      <div style="background:var(--gray); padding:16px 8px;">
+        <div style="font-size:18px; margin-bottom:8px;">📋</div>
+        <div style="font-family:'Space Mono',monospace; font-size:9px; color:var(--yellow); text-transform:uppercase;">Planning</div>
+        <div style="font-size:11px; color:var(--white2); margin-top:6px;">Cronograma + riscos</div>
+      </div>
+      <div style="background:var(--gray); padding:16px 8px;">
+        <div style="font-size:18px; margin-bottom:8px;">🎨</div>
+        <div style="font-family:'Space Mono',monospace; font-size:9px; color:var(--yellow); text-transform:uppercase;">Criação</div>
+        <div style="font-size:11px; color:var(--white2); margin-top:6px;">Referências + copy</div>
+      </div>
+      <div style="background:var(--gray); padding:16px 8px;">
+        <div style="font-size:18px; margin-bottom:8px;">✅</div>
+        <div style="font-family:'Space Mono',monospace; font-size:9px; color:var(--yellow); text-transform:uppercase;">QA</div>
+        <div style="font-size:11px; color:var(--white2); margin-top:6px;">QA automático</div>
+      </div>
+      <div style="background:var(--gray); padding:16px 8px;">
+        <div style="font-size:18px; margin-bottom:8px;">📤</div>
+        <div style="font-family:'Space Mono',monospace; font-size:9px; color:var(--yellow); text-transform:uppercase;">Entrega</div>
+        <div style="font-size:11px; color:var(--white2); margin-top:6px;">Aprovação assistida</div>
+      </div>
+      <div style="background:var(--gray); padding:16px 8px;">
+        <div style="font-size:18px; margin-bottom:8px;">📊</div>
+        <div style="font-family:'Space Mono',monospace; font-size:9px; color:var(--yellow); text-transform:uppercase;">Report</div>
+        <div style="font-size:11px; color:var(--white2); margin-top:6px;">Narrativa automática</div>
+      </div>
+      <div style="background:var(--gray); padding:16px 8px;">
+        <div style="font-size:18px; margin-bottom:8px;">🔄</div>
+        <div style="font-family:'Space Mono',monospace; font-size:9px; color:var(--yellow); text-transform:uppercase;">Aprendizado</div>
+        <div style="font-size:11px; color:var(--white2); margin-top:6px;">Memória de cliente</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10. MAPA COLABORATIVO -->
+<section id="mapa-colaborativo">
+  <div class="sec-header">
+    <span class="sec-num">10</span>
+    <h2>Onde <em>você</em> entra nisso?</h2>
+  </div>
+
+  <div class="collab-intro">
+    <div>
+      <h3>Mapeie sua área no projeto de IA</h3>
+      <p style="margin-bottom:14px;">Cada área da Live tem dores, gargalos e oportunidades específicas. Este mapa é <strong style="color:var(--white)">vivo</strong> — clique em qualquer área para ver o diagnóstico atual e contribuir com ideias de onde a IA pode entrar no seu dia a dia.</p>
+      <p>Não existe resposta errada. O que mais queremos é saber o que <strong style="color:var(--white)">toma o seu tempo sem precisar</strong> e onde uma ferramenta poderia te ajudar a fazer mais. <em style="color:var(--yellow)">Você é quem melhor conhece seu próprio processo.</em></p>
+    </div>
+    <div class="collab-cta">
+      <a class="collab-btn collab-btn-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSdOxxBxywSf-2Gq9AjffFRpv0C8sDUdgbBirYWOQsDnitRMTg/viewform" target="_blank">Preencher meu mapeamento ↗</a>
+      <a class="collab-btn collab-btn-secondary" href="https://docs.google.com/spreadsheets/d/1l1XCpVgwCWPG8EJFKUcjkhH_Hj_R-rmx5c2JDyQ2aqQ/edit" target="_blank">Ver matriz completa ↗</a>
+    </div>
+  </div>
+
+  <p style="font-family:'Space Mono',monospace; font-size:10px; color:var(--gray3); text-transform:uppercase; letter-spacing:0.15em; margin-bottom:16px;">Clique em qualquer área para ver o diagnóstico e sugerir oportunidades</p>
+
+  <div class="mapa-collab-grid">
+
+    <div class="mapa-collab-card" onclick="openCollabModal('atendimento')">
+      <div class="mcc-badge-ai">Fase 1</div>
+      <div class="mcc-icon">📣</div>
+      <div class="mcc-name">Atendimento</div>
+      <div class="mcc-status"><span class="mcc-dot dot-yellow"></span>Em mapeamento</div>
+      <div class="mcc-ia">Atas, briefs, e-mails de alinhamento, gestão de aprovações</div>
+      <div class="mcc-action">Ver detalhes + contribuir →</div>
+    </div>
+
+    <div class="mapa-collab-card" onclick="openCollabModal('criacao')">
+      <div class="mcc-badge-ai">Fase 1</div>
+      <div class="mcc-icon">🎨</div>
+      <div class="mcc-name">Criação</div>
+      <div class="mcc-status"><span class="mcc-dot dot-yellow"></span>Em mapeamento</div>
+      <div class="mcc-ia">Conceitos, referências, copy por formato, motion briefing</div>
+      <div class="mcc-action">Ver detalhes + contribuir →</div>
+    </div>
+
+    <div class="mapa-collab-card" onclick="openCollabModal('social')">
+      <div class="mcc-badge-ai">Fase 1</div>
+      <div class="mcc-icon">📱</div>
+      <div class="mcc-name">Social Media</div>
+      <div class="mcc-status"><span class="mcc-dot dot-red"></span>Gargalo ativo</div>
+      <div class="mcc-ia">Calendários, legendas, análise de sentimento, relatórios</div>
+      <div class="mcc-action">Ver detalhes + contribuir →</div>
+    </div>
+
+    <div class="mapa-collab-card" onclick="openCollabModal('midia')">
+      <div class="mcc-badge-ai">Fase 2</div>
+      <div class="mcc-icon">📡</div>
+      <div class="mcc-name">Mídia & Tráfego</div>
+      <div class="mcc-status"><span class="mcc-dot dot-yellow"></span>Em mapeamento</div>
+      <div class="mcc-ia">Análise de performance, justificativa de verba, relatórios</div>
+      <div class="mcc-action">Ver detalhes + contribuir →</div>
+    </div>
+
+    <div class="mapa-collab-card" onclick="openCollabModal('bi')">
+      <div class="mcc-badge-ai">Fase 1</div>
+      <div class="mcc-icon">📊</div>
+      <div class="mcc-name">BI & Insights</div>
+      <div class="mcc-status"><span class="mcc-dot dot-red"></span>Gargalo ativo</div>
+      <div class="mcc-ia">Relatórios automáticos, narrativa de dados, dashboards</div>
+      <div class="mcc-action">Ver detalhes + contribuir →</div>
+    </div>
+
+    <div class="mapa-collab-card" onclick="openCollabModal('influenciadores')">
+      <div class="mcc-badge-ai">Fase 1</div>
+      <div class="mcc-icon">🌟</div>
+      <div class="mcc-name">Influenciadores</div>
+      <div class="mcc-status"><span class="mcc-dot dot-yellow"></span>Em mapeamento</div>
+      <div class="mcc-ia">Avaliação de perfis, briefing de creators, reports de campanha</div>
+      <div class="mcc-action">Ver detalhes + contribuir →</div>
+    </div>
+
+    <div class="mapa-collab-card" onclick="openCollabModal('operacoes')">
+      <div class="mcc-badge-ai">Fase 1</div>
+      <div class="mcc-icon">⚙️</div>
+      <div class="mcc-name">Operações</div>
+      <div class="mcc-status"><span class="mcc-dot dot-red"></span>Gargalo crítico</div>
+      <div class="mcc-ia">Abertura de jobs, distribuição de tarefas, checklists, onboarding</div>
+      <div class="mcc-action">Ver detalhes + contribuir →</div>
+    </div>
+
+    <div class="mapa-collab-card" onclick="openCollabModal('projetos')">
+      <div class="mcc-badge-ai">Fase 1</div>
+      <div class="mcc-icon">📁</div>
+      <div class="mcc-name">Projetos</div>
+      <div class="mcc-status"><span class="mcc-dot dot-yellow"></span>Em mapeamento</div>
+      <div class="mcc-ia">Cronogramas, mapeamento de riscos, kickoffs, status reports</div>
+      <div class="mcc-action">Ver detalhes + contribuir →</div>
+    </div>
+
+    <div class="mapa-collab-card" onclick="openCollabModal('backoffice')">
+      <div class="mcc-badge-ai">Fase 2</div>
+      <div class="mcc-icon">🏢</div>
+      <div class="mcc-name">Back Office & TI</div>
+      <div class="mcc-status"><span class="mcc-dot dot-yellow"></span>Em mapeamento</div>
+      <div class="mcc-ia">Automação financeira, suporte de TI, documentação de infra</div>
+      <div class="mcc-action">Ver detalhes + contribuir →</div>
+    </div>
+
+  </div>
+
+  <div style="margin-top:24px; padding:24px 32px; background:var(--gray); border:1px dashed var(--gray3); display:flex; align-items:center; gap:24px;">
+    <div style="font-size:28px;">💡</div>
+    <div>
+      <p style="font-family:'Space Mono',monospace; font-size:11px; color:var(--yellow); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:6px;">Sua área não está aqui ou falta alguma coisa?</p>
+      <p style="font-size:13px; color:var(--white2); line-height:1.6;">Use o formulário de mapeamento para sugerir uma nova área, ajustar o diagnóstico de uma existente ou adicionar oportunidades de IA que a gente ainda não mapeou. Cada input vira dado real na nossa matriz de priorização.</p>
+    </div>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdOxxBxywSf-2Gq9AjffFRpv0C8sDUdgbBirYWOQsDnitRMTg/viewform" target="_blank" style="white-space:nowrap; font-family:'Space Mono',monospace; font-size:10px; padding:12px 20px; background:var(--yellow); color:var(--black); text-decoration:none; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; flex-shrink:0;">Sugerir aqui ↗</a>
+  </div>
+</section>
+
+<!-- MODAL COLABORATIVO -->
+<div class="collab-modal" id="collabModal" onclick="if(event.target===this)closeCollabModal()">
+  <div class="collab-modal-box">
+    <button class="collab-modal-close" onclick="closeCollabModal()">✕</button>
+    <div class="collab-modal-title" id="cm-title">Área</div>
+    <div class="collab-modal-sub" id="cm-sub">Diagnóstico atual · ℓiⱴε × IA</div>
+    <div id="cm-body"></div>
+    <a class="cm-suggest-btn" id="cm-suggest-link" href="https://docs.google.com/forms/d/e/1FAIpQLSdOxxBxywSf-2Gq9AjffFRpv0C8sDUdgbBirYWOQsDnitRMTg/viewform" target="_blank">Sugiro uma oportunidade de IA nesta área ↗</a>
+  </div>
+</div>
+
+<script>
+const collabData = {
+  atendimento: {
+    title: '📣 Atendimento',
+    dor: 'Tempo excessivo em atas, e-mails de alinhamento e tradução de briefing desestruturado para o time interno.',
+    gargalo: 'Cada briefing que chega do cliente precisa ser reinterpretado — isso custa horas toda semana.',
+    iaJa: ['Estruturar ata de reunião a partir de anotações brutas', 'Transformar e-mail de cliente em brief operacional', 'Gerar e-mail de alinhamento pós-reunião em 30 segundos', 'Resposta a dúvidas frequentes do cliente (FAQ assistido)'],
+    ficaHumano: 'Relacionamento estratégico, gestão de crise, negociações, leitura política do cliente.',
+    urgencia: '⭐⭐⭐ Alta',
+    responsavel: 'Priscila Penachio + Breno Assumpção'
+  },
+  criacao: {
+    title: '🎨 Criação',
+    dor: 'Pesquisa de referência e geração de primeiras versões de copy consomem tempo criativo que deveria ir para conceituação.',
+    gargalo: 'O briefing chega tarde, incompleto, e a criação precisa "adivinhar" a direção — com IA isso muda.',
+    iaJa: ['Geração de conceitos criativos a partir do brief', 'Referências visuais agrupadas por estilo e mood', 'Copy em múltiplos formatos a partir de um conceito aprovado', 'Briefing de motion e produção a partir do layout'],
+    ficaHumano: 'Direção criativa, tomada de decisão estética, relação com o cliente, big ideas.',
+    urgencia: '⭐⭐⭐ Alta',
+    responsavel: 'Bruno Lanzo + Thamara Maura + Felipe Banjo'
+  },
+  social: {
+    title: '📱 Social Media',
+    dor: 'Volume altíssimo de entregas com prazos curtos. Criação de legendas, calendários e relatórios de forma manual.',
+    gargalo: 'Social é a área com maior volume de itens repetitivos por semana — exatamente onde IA tem mais impacto imediato.',
+    iaJa: ['Calendário editorial mensal por cliente a partir de pilares', 'Legenda + hashtags + CTA por plataforma e tom', 'Relatório de performance com narrativa automática', 'Análise de sentimento de comentários e menções'],
+    ficaHumano: 'Curadoria de conteúdo, tendências culturais, crise de reputação, relacionamento com comunidade.',
+    urgencia: '⭐⭐⭐⭐ Crítica',
+    responsavel: 'Bruno Lanzo + Luisa Dal Mas'
+  },
+  midia: {
+    title: '📡 Mídia & Tráfego',
+    dor: 'Análise de dados de veiculação, criação de relatórios e justificativa de investimento são atividades manuais e recorrentes.',
+    gargalo: 'Relatório de mídia com narrativa demoram 2–3x mais do que deveriam.',
+    iaJa: ['Análise de performance vs. benchmark por canal', 'Narrativa executiva de resultado de campanha', 'Justificativa de alocação de verba por canal', 'Detecção de anomalias e alertas de performance'],
+    ficaHumano: 'Estratégia de compra de mídia, negociação com veículos, decisão de budget.',
+    urgencia: '⭐⭐⭐ Alta',
+    responsavel: 'Polato + Erick Melo'
+  },
+  bi: {
+    title: '📊 BI & Insights',
+    dor: 'Produção de relatórios com narrativa é lenta. Dados existem, mas transformá-los em história para o cliente consome muito tempo.',
+    gargalo: 'O BI fica travado em formatação e narrativa quando deveria estar em análise e recomendação.',
+    iaJa: ['Resumo executivo de relatório de dados', 'Narrativa de performance para apresentação ao cliente', 'Análise de tendências e sazonalidade automatizada', 'Geração de insights a partir de dataset bruto'],
+    ficaHumano: 'Interpretação estratégica, recomendações táticas, leitura de contexto de mercado.',
+    urgencia: '⭐⭐⭐⭐ Crítica',
+    responsavel: 'Polato + Erick Melo + Guilherme Motta + Maria Eduarda'
+  },
+  influenciadores: {
+    title: '🌟 Influenciadores / Creator Economy',
+    dor: 'Avaliação manual de perfis de creators para cada campanha. Reports feitos na mão depois de cada ação.',
+    gargalo: 'Processo de seleção e briefing de influencer é repetitivo e poderia ser acelerado 3x.',
+    iaJa: ['Score de perfil por critérios da campanha', 'Briefing estruturado de creator a partir do escopo', 'Report de campanha com análise de menções e alcance', 'Mapeamento de creators por nicho e audiência'],
+    ficaHumano: 'Relacionamento com creators, curadoria final, negociação de contratos, gestão de crise.',
+    urgencia: '⭐⭐⭐ Alta',
+    responsavel: 'Polato + Roberto Ferreira'
+  },
+  operacoes: {
+    title: '⚙️ Operações',
+    dor: 'Abertura de jobs, distribuição de demandas, acompanhamento de status — tudo feito manualmente, gerando gargalos constantes.',
+    gargalo: 'Ops é o nó da operação. Quando trava aqui, trava em todo lugar.',
+    iaJa: ['Abertura automática de job com campos preenchidos', 'Checklist de entrega por tipo de job', 'Redistribuição de tarefas em situações de urgência', 'Onboarding de novo cliente com processo padronizado'],
+    ficaHumano: 'Gestão de conflito, decisões de prioridade com impacto financeiro, relação com fornecedores.',
+    urgencia: '⭐⭐⭐⭐⭐ Máxima',
+    responsavel: 'Sté Alves + Émelin Cerveira + Amanda Carneiro + Duda Monteiro'
+  },
+  projetos: {
+    title: '📁 Projetos',
+    dor: 'Cronogramas criados manualmente, mapeamento de riscos informal, documentação de kickoff incompleta.',
+    gargalo: 'Falta de padrão de documentação gera retrabalho e gaps de comunicação entre áreas.',
+    iaJa: ['Cronograma detalhado a partir de escopo de job', 'Mapeamento de riscos e dependências por projeto', 'Documento de kickoff padronizado por tipo de entrega', 'Status report automático a partir de updates do Monday'],
+    ficaHumano: 'Negociação de prazo com cliente, decisão de escopo, gestão de expectativas.',
+    urgencia: '⭐⭐⭐ Alta',
+    responsavel: 'Duda Monteiro + Arthur Pinheiro'
+  },
+  backoffice: {
+    title: '🏢 Back Office & TI',
+    dor: 'Fechamento financeiro demorado, suporte de TI reativo, documentação de infra inexistente ou desatualizada.',
+    gargalo: 'TI é a base de todos os projetos de IA — qualquer gargalo aqui bloqueia tudo.',
+    iaJa: ['Automação de conciliação financeira mensal', 'Triagem de chamados de suporte com resposta padrão', 'Documentação automática de infra e acessos', 'Alertas de vencimento de contratos e NFs'],
+    ficaHumano: 'Arquitetura de segurança, decisões de investimento em tecnologia, gestão de acesso crítico.',
+    urgencia: '⭐⭐⭐⭐ Alta — base de tudo',
+    responsavel: 'Mário Ferreira + Arthur Pinheiro'
+  }
+};
+
+function openCollabModal(area) {
+  const d = collabData[area];
+  if (!d) return;
+  document.getElementById('cm-title').textContent = d.title;
+  document.getElementById('cm-body').innerHTML = `
+    <div class="cm-section">
+      <div class="cm-section-label">Diagnóstico atual</div>
+      <div class="cm-row"><span class="cm-label">Maior dor</span><span class="cm-val">${d.dor}</span></div>
+      <div class="cm-row"><span class="cm-label">Gargalo</span><span class="cm-val">${d.gargalo}</span></div>
+      <div class="cm-row"><span class="cm-label">Urgência</span><span class="cm-val">${d.urgencia}</span></div>
+      <div class="cm-row"><span class="cm-label">Responsável</span><span class="cm-val">${d.responsavel}</span></div>
+    </div>
+    <div class="cm-section">
+      <div class="cm-section-label">Onde a IA já pode entrar</div>
+      <div class="cm-ia-list">${d.iaJa.map(i => `<div class="cm-ia-item">${i}</div>`).join('')}</div>
+    </div>
+    <div class="cm-section">
+      <div class="cm-section-label">O que sempre fica humano</div>
+      <div class="cm-row" style="grid-template-columns:1fr;"><span class="cm-val">${d.ficaHumano}</span></div>
+    </div>
+  `;
+  document.getElementById('collabModal').classList.add('open');
+}
+
+function closeCollabModal() {
+  document.getElementById('collabModal').classList.remove('open');
+}
+</script>
+
+<!-- FECHAMENTO -->
+<div class="closing">
+  <div class="closing-quote">
+    "A IA não vai, sozinha, resolver os problemas da Live. Mas <em>pessoas certas usando IA da forma certa</em> é que vão."
+  </div>
+  <div class="closing-sub">ℓiⱴε · Live The Culture & I.A. PowerHouse · 2026</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">ℓiⱴε</div>
+  <div class="footer-meta">
+    Comitê de IA · Kickoff 24.06.2026<br>
+    Polato + Mariana Gouveia
+  </div>
+</footer>
+
+</body>
+</html>
