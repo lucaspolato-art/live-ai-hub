@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ℓiⱴε × IA — Slide Fluxograma</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap');
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+/* ── STAGE ── */
+body{
+  background:#e8e8e6;
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;min-height:100vh;
+  font-family:'DM Sans',sans-serif;
+  padding:40px 20px;gap:24px;
+}
+
+.stage-label{
+  font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;
+  text-transform:uppercase;color:#999;
+}
+
+/* ── SLIDE 16:9 ── */
+.slide{
+  width:1280px;height:720px;
+  background:#ffffff;
+  color:#0a0a0a;
+  position:relative;overflow:hidden;flex-shrink:0;
+  box-shadow:0 8px 48px rgba(0,0,0,.14);
+}
+
+/* Barra amarela esquerda — identidade Live */
+.slide::before{
+  content:'';position:absolute;
+  left:0;top:0;bottom:0;width:5px;
+  background:#f2ff00;
+}
+
+/* ── INNER LAYOUT ── */
+.inner{
+  position:absolute;inset:0;
+  display:grid;
+  grid-template-rows:auto 1fr auto;
+  padding:36px 52px 28px 60px;
+  gap:0;
+}
+
+/* ── HEADER ── */
+.hd{
+  display:flex;justify-content:space-between;
+  align-items:flex-start;margin-bottom:22px;
+}
+.hd-left{}
+.logo{
+  font-family:'Space Mono',monospace;font-size:13px;
+  font-weight:700;letter-spacing:-1px;color:#0a0a0a;
+  display:flex;align-items:center;gap:6px;margin-bottom:4px;
+}
+.logo-y{color:#0a0a0a}
+.logo-badge{
+  background:#f2ff00;color:#0a0a0a;
+  font-family:'Space Mono',monospace;font-size:7px;letter-spacing:2px;
+  text-transform:uppercase;font-weight:700;
+  padding:3px 9px;border-radius:100px;
+}
+.slide-title{
+  font-family:'Space Mono',monospace;font-weight:700;
+  font-size:26px;letter-spacing:-1px;line-height:1;color:#0a0a0a;
+  margin-bottom:4px;
+}
+.slide-sub{
+  font-size:10px;color:#888;letter-spacing:2px;
+  text-transform:uppercase;font-family:'Space Mono',monospace;
+}
+
+/* LEGEND */
+.legend{display:flex;flex-direction:column;gap:5px;align-items:flex-end}
+.leg{display:flex;align-items:center;gap:6px;font-size:9px;color:#888;font-family:'Space Mono',monospace;letter-spacing:.5px}
+.ld{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.ls{width:7px;height:7px;border-radius:2px;flex-shrink:0}
+
+/* ── FLOW ── */
+.flow{display:flex;flex-direction:column;gap:5px}
+.frow{display:flex;align-items:stretch;gap:4px}
+
+/* NODE */
+.node{
+  background:#fafaf8;border:1px solid #e0e0de;border-radius:4px;
+  padding:10px 12px;display:flex;flex-direction:column;gap:4px;
+  position:relative;overflow:hidden;flex:1;min-width:0;
+}
+.node::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--nc,#e0e0de);border-radius:4px 4px 0 0;
+}
+.nt{font-family:'Space Mono',monospace;font-weight:700;font-size:9px;letter-spacing:-.2px;line-height:1.3;color:#0a0a0a}
+.ns{font-size:8px;color:#888;line-height:1.4}
+.ntags{display:flex;gap:3px;flex-wrap:wrap;margin-top:2px}
+
+/* STATUS DOT */
+.sd{position:absolute;top:8px;right:8px;width:6px;height:6px;border-radius:50%}
+.g{background:#00e87a}.y{background:#ffb300}.r{background:#ff2d55}
+
+/* BADGE */
+.tag{
+  font-family:'Space Mono',monospace;font-size:7px;letter-spacing:.3px;
+  text-transform:uppercase;font-weight:700;padding:1px 6px;border-radius:100px;
+}
+.tg{background:rgba(0,232,122,.12);color:#00a858;border:1px solid rgba(0,232,122,.3)}
+.ty{background:rgba(255,179,0,.12);color:#b37a00;border:1px solid rgba(255,179,0,.3)}
+.tr{background:rgba(255,45,85,.1);color:#cc1a40;border:1px solid rgba(255,45,85,.25)}
+.tb{background:rgba(0,140,255,.08);color:#0070d4;border:1px solid rgba(0,140,255,.2)}
+.tp{background:rgba(170,0,220,.08);color:#8800b8;border:1px solid rgba(170,0,220,.2)}
+.tyy{background:#f2ff00;color:#0a0a0a;border:1px solid #c8d400}
+
+/* ARROW */
+.arr{display:flex;align-items:center;padding:0 4px;font-size:11px;flex-shrink:0;align-self:center}
+.ar{color:#ff2d55}.ay{color:#ffb300}.ad{color:#d0d0ce}
+
+/* DIVIDER */
+.div{display:flex;align-items:center;gap:10px;margin:4px 0}
+.div::before,.div::after{content:'';flex:1;height:1px;background:#e8e8e6}
+.div span{font-family:'Space Mono',monospace;font-size:7px;letter-spacing:2px;text-transform:uppercase;color:#bbb;white-space:nowrap}
+
+/* PARALLEL */
+.para{display:grid;grid-template-columns:repeat(6,1fr);gap:4px}
+
+/* AI STRIP */
+.ai{
+  display:flex;gap:8px;padding:7px 10px;border-radius:4px;
+  background:rgba(0,140,255,.05);border:1px solid rgba(0,140,255,.18);
+  font-size:8px;color:#888;line-height:1.5;align-items:flex-start;margin:4px 0;
+}
+.ai strong{color:#0070d4;font-family:'Space Mono',monospace;font-size:7px;letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:1px}
+
+/* SATELLITES */
+.sat-lbl{
+  font-family:'Space Mono',monospace;font-size:8px;letter-spacing:2px;
+  text-transform:uppercase;color:#bbb;
+  margin:8px 0 6px;display:flex;align-items:center;gap:10px;
+}
+.sat-lbl::after{content:'';flex:1;height:1px;background:#e8e8e6}
+.sats{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.sat{
+  background:#fafaf8;border:1px solid #e0e0de;border-radius:4px;
+  padding:9px 10px 9px 14px;position:relative;overflow:hidden;
+}
+.sat::before{content:'';position:absolute;top:0;left:0;width:2px;height:100%;background:var(--nc,#e0e0de)}
+.sat h5{font-family:'Space Mono',monospace;font-weight:700;font-size:8px;margin-bottom:3px;color:#0a0a0a;letter-spacing:-.2px}
+.sat p{font-size:8px;color:#888;line-height:1.5}
+.sat .ph{
+  font-family:'Space Mono',monospace;font-size:7px;letter-spacing:1px;text-transform:uppercase;
+  padding:1px 7px;border-radius:100px;background:#f0f0ee;color:#888;
+  margin-top:6px;display:inline-block;border:1px solid #e0e0de;
+}
+
+/* ── FOOTER ── */
+.ft{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-top:12px;padding-top:10px;border-top:1px solid #e8e8e6;
+  font-family:'Space Mono',monospace;font-size:8px;color:#bbb;letter-spacing:1px;
+}
+.ft-mark{
+  background:#0a0a0a;color:#f2ff00;
+  font-family:'Space Mono',monospace;font-size:8px;font-weight:700;
+  padding:3px 10px;border-radius:2px;letter-spacing:-0.5px;
+}
+
+/* ── PRINT ── */
+@media print{
+  body{background:white;padding:0}
+  .stage-label,.print-hint{display:none}
+  .slide{box-shadow:none;width:100%;height:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="stage-label">Slide 16:9 — Fundo branco — Para inserir no documento principal</div>
+
+<div class="slide">
+  <div class="inner">
+
+    <!-- HEADER -->
+    <div class="hd">
+      <div class="hd-left">
+        <div class="logo">
+          ℓiⱴε
+          <span class="logo-badge">× IA</span>
+        </div>
+        <div class="slide-title">Mapa de Operação</div>
+        <div class="slide-sub">Fluxo · Gargalos · Onde a IA entra · Projetos satélite</div>
+      </div>
+      <div class="legend">
+        <div class="leg"><div class="ld" style="background:#00e87a"></div>Fluindo</div>
+        <div class="leg"><div class="ld" style="background:#ffb300"></div>Atenção</div>
+        <div class="leg"><div class="ld" style="background:#ff2d55"></div>Gargalo</div>
+        <div class="leg"><div class="ls" style="background:rgba(0,140,255,.5)"></div>IA entra aqui</div>
+        <div class="leg"><div class="ls" style="background:rgba(170,0,220,.4)"></div>Projeto satélite</div>
+      </div>
+    </div>
+
+    <!-- FLOW -->
+    <div class="flow">
+
+      <!-- LINHA 1 -->
+      <div class="frow">
+        <div class="node" style="--nc:#ff2d55;max-width:192px">
+          <div class="sd r"></div>
+          <div class="nt">📥 Entrada do Job</div>
+          <div class="ns">Monday manual, sem padrão</div>
+          <div class="ntags"><span class="tag tr">🔴 Gargalo</span><span class="tag tb">🤖 brief check</span></div>
+        </div>
+        <div class="arr ay">→</div>
+        <div class="node" style="--nc:#ffb300">
+          <div class="sd y"></div>
+          <div class="nt">🤝 Atendimento</div>
+          <div class="ns">Recebe, valida, alinha com cliente</div>
+          <div class="ntags"><span class="tag ty">🟡 Atenção</span><span class="tag tb">🤖 e-mail / follow</span></div>
+        </div>
+        <div class="arr ar">→</div>
+        <div class="node" style="--nc:#ff2d55">
+          <div class="sd r"></div>
+          <div class="nt">⚡ Operações</div>
+          <div class="ns">Capacity, Monday, distribuição</div>
+          <div class="ntags"><span class="tag tr">🔴 Gargalo crítico</span><span class="tag tb">🤖 capacity</span></div>
+        </div>
+        <div style="display:flex;align-items:center;flex:1;padding-left:6px">
+          <div class="ai" style="flex:1">
+            <div style="font-size:14px;flex-shrink:0">🤖</div>
+            <div><strong>Prompt Bank ativa aqui</strong>"Diagnóstico de Briefing" + "Análise de Capacity" antes de abrir qualquer job em produção.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="div"><span>Entra em produção</span></div>
+
+      <!-- PARALELO -->
+      <div class="para">
+        <div class="node" style="--nc:#ff6b35">
+          <div class="sd y"></div>
+          <div class="nt">🎨 Criação</div>
+          <div class="ns">Conceito, copy, arte</div>
+          <div class="ntags"><span class="tag ty">🟡 revisão</span><span class="tag tb">🤖</span></div>
+        </div>
+        <div class="node" style="--nc:#00acc1">
+          <div class="sd g"></div>
+          <div class="nt">📲 Social Media</div>
+          <div class="ns">Cal., copy, aprovação</div>
+          <div class="ntags"><span class="tag tg">🟢 ok</span><span class="tag tb">🤖</span></div>
+        </div>
+        <div class="node" style="--nc:#e53935">
+          <div class="sd g"></div>
+          <div class="nt">🚀 Tráfego</div>
+          <div class="ns">Campanhas pagas</div>
+          <div class="ntags"><span class="tag tg">🟢 ok</span><span class="tag tb">🤖</span></div>
+        </div>
+        <div class="node" style="--nc:#7b1fa2">
+          <div class="sd y"></div>
+          <div class="nt">📡 Mídia</div>
+          <div class="ns">Plano, veiculação</div>
+          <div class="ntags"><span class="tag ty">🟡</span><span class="tag tb">🤖</span></div>
+        </div>
+        <div class="node" style="--nc:#f9a825">
+          <div class="sd y"></div>
+          <div class="nt">⭐ Influenc.</div>
+          <div class="ns">Seleção, briefing</div>
+          <div class="ntags"><span class="tag ty">🟡</span><span class="tag tb">🤖</span></div>
+        </div>
+        <div class="node" style="--nc:#ad1457">
+          <div class="sd g"></div>
+          <div class="nt">📣 Marketing</div>
+          <div class="ns">Aquisição, conteúdo</div>
+          <div class="ntags"><span class="tag tg">🟢 ok</span><span class="tag tb">🤖</span></div>
+        </div>
+      </div>
+
+      <div class="div"><span>Entrega &amp; reporting</span></div>
+
+      <!-- LINHA FINAL -->
+      <div class="frow">
+        <div class="node" style="--nc:#ff2d55">
+          <div class="sd r"></div>
+          <div class="nt">📋 Projetos</div>
+          <div class="ns">Prazos, aprovações, escopo</div>
+          <div class="ntags"><span class="tag tr">🔴 Gargalo</span><span class="tag tb">🤖 escopo</span></div>
+        </div>
+        <div class="arr ay">→</div>
+        <div class="node" style="--nc:#3949ab">
+          <div class="sd y"></div>
+          <div class="nt">📊 Reporting / BI</div>
+          <div class="ns">Análise, relatório executivo</div>
+          <div class="ntags"><span class="tag ty">🟡 manual</span><span class="tag tb">🤖 análise</span></div>
+        </div>
+        <div class="arr ay">→</div>
+        <div class="node" style="--nc:#0a0a0a">
+          <div class="sd g"></div>
+          <div class="nt">✅ Entrega ao Cliente</div>
+          <div class="ns">Apresentação, aprovação</div>
+          <div class="ntags"><span class="tag tg">🟢 fluindo</span><span class="tag tp">📌 Fase 2: QA</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SATÉLITES -->
+    <div>
+      <div class="sat-lbl">Projetos satélite — independentes, conectáveis na Fase 3</div>
+      <div class="sats">
+        <div class="sat" style="--nc:#3949ab">
+          <h5>📊 Dashboard Financeiro</h5>
+          <p>Rentabilidade por conta e job. Time financeiro toca de forma independente.</p>
+          <span class="ph">Fase 3 → integração</span>
+        </div>
+        <div class="sat" style="--nc:#aa00dc">
+          <h5>🗂️ Banco por Cliente</h5>
+          <p>Brand guide, histórico de aprovações/reprovações, assets, QA pré-envio.</p>
+          <span class="ph">Fase 2 → em planejamento</span>
+        </div>
+        <div class="sat" style="--nc:#ffb300">
+          <h5>👥 Dashboard de Capacity</h5>
+          <p>Visão em tempo real. Job só abre se capacity validado. Resolve o gargalo de Ops.</p>
+          <span class="ph">Fase 3 → pós Fase 2</span>
+        </div>
+        <div class="sat" style="--nc:#0a0a0a">
+          <h5>🤖 Prompt Bank</h5>
+          <p>Ativo. 11 áreas, prompts reais. Ritual semanal. Fase 2: vinculado ao banco do cliente.</p>
+          <span class="ph">Fase 1 ✅ ativo</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="ft">
+      <span class="ft-mark">ℓiⱴε × IA</span>
+      <span>Mapa de Operação · Fase 1.5 · Documento interno — não distribuir</span>
+      <span>live.tt</span>
+    </div>
+
+  </div>
+</div>
+
+<div class="stage-label" style="color:#aaa;font-size:9px">Para imprimir: Ctrl+P → Tamanho A3 paisagem · ou salvar como PNG via screenshot</div>
+
+</body>
+</html>
