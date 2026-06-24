@@ -174,8 +174,10 @@ nav{
 <nav>
   <span class="logo">ℓiⱴε <em>× IA</em></span>
   <div class="nav-r">
+    <span id="sheet-counter" style="font-family:'Space Mono',monospace;font-size:9px;color:var(--dim);letter-spacing:1px;">carregando dados...</span>
     <span class="nver">Fase 1.5</span>
     <span class="nbadge">Mapa de Operação</span>
+    <a href="https://forms.gle/8TWcyNFRnph97Mya8" target="_blank" style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--y);text-decoration:none;border:1px solid rgba(242,255,0,.3);padding:4px 12px;border-radius:100px;">+ Contribuir ↗</a>
   </div>
 </nav>
 
@@ -556,6 +558,93 @@ function sv(id,btn){
   btn.classList.add('active');
 }
 document.addEventListener('keydown',e=>{if(e.key==='Escape')cp()});
+
+// ── CONEXÃO COM GOOGLE SHEET ─────────────────────────────────────────────
+// Planilha de respostas do forms de contribuição de prompts
+const SHEET_ID = '1jEa65Etgkk3-LP9M_U3qnKyEXKMMmHBXTW7W97rSMD8';
+const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Sheet1`;
+
+// Mapeamento: valor no forms → node ID no fluxograma
+const AREA_MAP = {
+  'Atendimento':    'atendimento',
+  'Criação':        'criacao',
+  'Social Media':   'social',
+  'Mídia & Tráfego':'midia',
+  'BI & Insights':  'reporting',
+  'Influenciadores':'influenciadores',
+  'Operações':      'ops',
+  'Projetos':       'projetos',
+  'Back Office':    'backoffice'
+};
+
+// Status definido pelo número de menções de gargalo na área
+function statusFromCount(count) {
+  if (count === 0) return null; // sem dados ainda
+  if (count >= 3)  return 'r';  // gargalo confirmado
+  if (count >= 1)  return 'y';  // atenção
+  return 'g';
+}
+
+let sheetData = {};
+
+async function loadSheetData() {
+  try {
+    const res = await fetch(SHEET_URL);
+    const text = await res.text();
+    // Remove o wrapper google.visualization.Query.setResponse(...)
+    const json = JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
+    const rows = json.table.rows || [];
+
+    // Coluna 1 = Área (índice 1 depois do timestamp)
+    const counts = {};
+    rows.forEach(row => {
+      const area = row.c[1]?.v?.trim();
+      if (area) counts[area] = (counts[area] || 0) + 1;
+    });
+
+    sheetData = counts;
+    updateFluxoStatus(counts);
+    updateCounter(rows.length);
+  } catch(e) {
+    console.warn('Sheet não acessível ainda:', e.message);
+  }
+}
+
+function updateFluxoStatus(counts) {
+  Object.entries(AREA_MAP).forEach(([area, nodeId]) => {
+    const count = counts[area] || 0;
+    const status = statusFromCount(count);
+    if (!status) return;
+
+    // Atualiza todos os dots do node
+    document.querySelectorAll(`[onclick*="op('${nodeId}')"] .sd`).forEach(dot => {
+      dot.className = `sd ${status}`;
+    });
+
+    // Atualiza o painel com dado real se aberto
+    if (D[nodeId]) {
+      const existing = D[nodeId].s.find(s => s.l === '📊 Dados reais');
+      if (!existing && count > 0) {
+        D[nodeId].s.unshift({
+          l: '📊 Dados reais — Forms de contribuição',
+          i: [{
+            t: `${count} prompt${count > 1 ? 's' : ''} enviado${count > 1 ? 's' : ''} desta área`,
+            b: `${count} colaborador${count > 1 ? 'es' : ''} já contribuíram com prompts desta área no Prompt Bank. ${count >= 3 ? '🔴 Alta demanda — prioridade de piloto.' : count >= 1 ? '🟡 Atenção — área mapeada.' : ''}`
+          }]
+        });
+      }
+    }
+  });
+}
+
+function updateCounter(total) {
+  const el = document.getElementById('sheet-counter');
+  if (el) el.textContent = `${total} contribuição${total !== 1 ? 'ões' : ''} recebida${total !== 1 ? 's' : ''}`;
+}
+
+// Carrega ao abrir e atualiza a cada 5 minutos
+loadSheetData();
+setInterval(loadSheetData, 5 * 60 * 1000);
 </script>
 </body>
 </html>
