@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ℓiⱴε × IA — Mapa de Operação</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap');
+
+:root {
+  --y:   #f2ff00;
+  --y2:  #c8d400;
+  --blk: #0a0a0a;
+  --blk2:#111;
+  --blk3:#181818;
+  --wht: #efefed;
+  --dim: #555;
+  --dim2:#333;
+  --grn: #00e87a;
+  --pnk: #ff2d55;
+  --r:   4px;
+  --amb: #ffb300;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--blk);color:var(--wht);font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.65;overflow-x:hidden}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:99;
+  height:48px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 40px;background:var(--blk);border-bottom:1px solid var(--dim2);
+}
+.logo{font-family:'Space Mono',monospace;font-size:15px;color:var(--y);letter-spacing:-1px}
+.logo em{color:var(--wht);font-style:normal}
+.nav-r{display:flex;align-items:center;gap:16px}
+.nbadge{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--blk);background:var(--y);padding:4px 12px;border-radius:100px;font-weight:700}
+.nver{font-family:'Space Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:1px}
+
+/* TABS */
+.tabs{display:flex;gap:6px;padding:16px 40px 0;margin-top:48px}
+.tab{
+  padding:8px 18px;border-radius:var(--r);border:1px solid var(--dim2);
+  background:transparent;color:var(--dim);font-family:'Space Mono',monospace;
+  font-size:9px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s;
+}
+.tab:hover{border-color:var(--dim);color:var(--wht)}
+.tab.active{background:var(--y);color:var(--blk);border-color:var(--y);font-weight:700}
+
+/* PAGE */
+.page{padding:24px 40px 80px}
+
+/* LEGEND */
+.legend{
+  display:flex;gap:24px;flex-wrap:wrap;align-items:center;
+  padding:16px 0 20px;border-bottom:1px solid var(--dim2);margin-bottom:24px;
+}
+.leg{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--dim)}
+.ld{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.ls{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+
+/* FLOW */
+.flow{display:flex;flex-direction:column;gap:4px}
+.frow{display:flex;align-items:stretch;gap:4px;margin-bottom:3px}
+
+/* NODE */
+.node{
+  background:var(--blk2);border:1px solid var(--dim2);border-radius:var(--r);
+  padding:14px 16px;display:flex;flex-direction:column;gap:6px;
+  position:relative;overflow:hidden;cursor:pointer;
+  transition:border-color .2s,transform .15s;flex:1;min-width:0;
+}
+.node:hover{border-color:var(--nc,var(--dim));transform:translateY(-2px)}
+.node::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--nc,var(--dim2));border-radius:var(--r) var(--r) 0 0}
+.ntitle{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;line-height:1.3;letter-spacing:-.3px}
+.nsub{font-size:12px;color:var(--dim);line-height:1.5}
+.ntags{display:flex;gap:5px;flex-wrap:wrap;margin-top:2px}
+
+/* STATUS DOT */
+.sd{position:absolute;top:11px;right:11px;width:7px;height:7px;border-radius:50%}
+.sd.g{background:var(--grn);animation:pg 2s infinite}
+.sd.y{background:var(--amb);animation:py 2s infinite}
+.sd.r{background:var(--pnk);animation:pr 2s infinite}
+@keyframes pg{0%,100%{box-shadow:0 0 0 0 rgba(0,232,122,.5)}50%{box-shadow:0 0 0 5px rgba(0,232,122,0)}}
+@keyframes py{0%,100%{box-shadow:0 0 0 0 rgba(255,179,0,.5)}50%{box-shadow:0 0 0 5px rgba(255,179,0,0)}}
+@keyframes pr{0%,100%{box-shadow:0 0 0 0 rgba(255,45,85,.5)}50%{box-shadow:0 0 0 5px rgba(255,45,85,0)}}
+
+/* ARROW */
+.arr{display:flex;align-items:center;padding:0 6px;font-size:14px;flex-shrink:0;align-self:center;color:var(--dim2)}
+.arr.r{color:var(--pnk)}.arr.y{color:var(--amb)}.arr.g{color:var(--grn)}
+
+/* BADGES */
+.tag{display:inline-flex;align-items:center;gap:5px;font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.5px;text-transform:uppercase;padding:2px 8px;border-radius:100px;font-weight:700}
+.tg{background:rgba(0,232,122,.1);color:var(--grn);border:1px solid rgba(0,232,122,.2)}
+.ty{background:rgba(255,179,0,.1);color:var(--amb);border:1px solid rgba(255,179,0,.2)}
+.tr{background:rgba(255,45,85,.1);color:var(--pnk);border:1px solid rgba(255,45,85,.2)}
+.tb{background:rgba(0,176,255,.1);color:#40c4ff;border:1px solid rgba(0,176,255,.18)}
+.tp{background:rgba(213,0,249,.1);color:#ea80fc;border:1px solid rgba(213,0,249,.18)}
+.tyy{background:rgba(242,255,0,.12);color:var(--y);border:1px solid rgba(242,255,0,.25)}
+
+/* DIVIDER */
+.div{display:flex;align-items:center;gap:14px;margin:16px 0}
+.div::before,.div::after{content:'';flex:1;height:1px;background:var(--dim2)}
+.div span{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--dim);white-space:nowrap}
+
+/* PARALLEL */
+.para{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:6px;margin-bottom:4px}
+
+/* AI CALLOUT */
+.ai{
+  display:flex;gap:12px;padding:14px 16px;border-radius:var(--r);
+  background:rgba(0,176,255,.04);border:1px solid rgba(0,176,255,.15);
+  font-size:12px;color:var(--dim);line-height:1.6;margin:8px 0;
+}
+.ai-ico{font-size:18px;flex-shrink:0}
+.ai strong{color:#40c4ff;display:block;font-family:'Space Mono',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;margin-bottom:3px}
+
+/* SATELLITES */
+.sat-lbl{
+  font-family:'Space Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--dim);margin:28px 0 12px;display:flex;align-items:center;gap:14px;
+}
+.sat-lbl::after{content:'';flex:1;height:1px;background:var(--dim2)}
+.sats{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+.sat{
+  background:var(--blk2);border:1px solid var(--dim2);border-radius:var(--r);
+  padding:14px 14px 14px 18px;position:relative;overflow:hidden;transition:border-color .2s;
+}
+.sat:hover{border-color:var(--dim)}
+.sat::before{content:'';position:absolute;top:0;left:0;width:2px;height:100%;background:var(--nc,var(--dim))}
+.sat h5{font-family:'Space Mono',monospace;font-weight:700;font-size:10px;letter-spacing:-.2px;margin-bottom:4px}
+.sat p{font-size:12px;color:var(--dim);line-height:1.5}
+.sat .ph{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border-radius:100px;background:var(--blk3);color:var(--dim);margin-top:8px;display:inline-block;border:1px solid var(--dim2)}
+
+/* PHASE VIEWS */
+.pv{display:none}
+.pv.active{display:block}
+
+/* PANEL */
+.ov{position:fixed;inset:0;z-index:250;background:rgba(0,0,0,.6);backdrop-filter:blur(3px);display:none}
+.ov.open{display:block}
+.panel{
+  position:fixed;right:0;top:0;bottom:0;width:340px;
+  background:#0d0d0d;border-left:1px solid var(--dim2);
+  z-index:300;transform:translateX(100%);transition:transform .3s ease;
+  padding:28px 24px;overflow-y:auto;
+}
+.panel.open{transform:translateX(0)}
+.panel-x{position:absolute;top:16px;right:16px;background:var(--blk2);border:1px solid var(--dim2);color:var(--wht);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center}
+.panel h3{font-family:'Space Mono',monospace;font-weight:700;font-size:14px;letter-spacing:-.3px;margin-bottom:16px;line-height:1.4;padding-right:36px}
+.psec{margin-bottom:16px}
+.plbl{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--y);margin-bottom:8px;display:block}
+.pitem{background:var(--blk2);border:1px solid var(--dim2);border-radius:var(--r);padding:10px 12px;font-size:12px;line-height:1.6;color:#ccc;margin-bottom:6px}
+.pitem strong{color:var(--wht);display:block;margin-bottom:2px;font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:-.2px}
+
+/* GARGALOS GRID */
+.ggrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:10px}
+
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--blk)}::-webkit-scrollbar-thumb{background:var(--dim2)}
+
+@media(max-width:768px){
+  nav,.tabs{padding-left:20px;padding-right:20px}
+  .page{padding:20px 20px 60px}
+  .para{grid-template-columns:1fr 1fr}
+  .sats,.ggrid{grid-template-columns:1fr}
+  .panel{width:100%}
+  .frow{flex-wrap:wrap}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">ℓiⱴε <em>× IA</em></span>
+  <div class="nav-r">
+    <span class="nver">Fase 1.5</span>
+    <span class="nbadge">Mapa de Operação</span>
+  </div>
+</nav>
+
+<div class="tabs">
+  <button class="tab active" onclick="sv('fluxo',this)">Fluxo completo</button>
+  <button class="tab" onclick="sv('gargalos',this)">Só gargalos</button>
+  <button class="tab" onclick="sv('ia',this)">Onde a IA entra</button>
+  <button class="tab" onclick="sv('roadmap',this)">Roadmap</button>
+</div>
+
+<div class="page">
+
+  <div class="legend">
+    <div class="leg"><div class="ld" style="background:var(--grn)"></div>Fluindo</div>
+    <div class="leg"><div class="ld" style="background:var(--amb)"></div>Atenção</div>
+    <div class="leg"><div class="ld" style="background:var(--pnk)"></div>Gargalo</div>
+    <div class="leg"><div class="ls" style="background:rgba(0,176,255,.5)"></div>IA entra aqui</div>
+    <div class="leg"><div class="ls" style="background:rgba(242,255,0,.4)"></div>Prompt Bank</div>
+    <div class="leg"><div class="ls" style="background:rgba(213,0,249,.4)"></div>Projeto satélite</div>
+    <div style="margin-left:auto;font-family:'Space Mono',monospace;font-size:9px;color:var(--dim);letter-spacing:1px">Clique em qualquer card para detalhar →</div>
+  </div>
+
+  <!-- ══ FLUXO ══ -->
+  <div class="pv active" id="pv-fluxo">
+    <div class="flow">
+
+      <div class="frow">
+        <div class="node" style="--nc:var(--pnk);max-width:205px" onclick="op('entrada')">
+          <div class="sd r"></div>
+          <div class="ntitle">📥 Entrada do Job</div>
+          <div class="nsub">Monday manual, sem padrão entre contas</div>
+          <div class="ntags"><span class="tag tr">🔴 Gargalo</span><span class="tag tb">🤖 brief check</span></div>
+        </div>
+        <div class="arr r">→</div>
+        <div class="node" style="--nc:var(--amb)" onclick="op('atendimento')">
+          <div class="sd y"></div>
+          <div class="ntitle">🤝 Atendimento</div>
+          <div class="nsub">Recebe, valida, alinha com cliente</div>
+          <div class="ntags"><span class="tag ty">🟡 Atenção</span><span class="tag tb">🤖 e-mail / follow</span></div>
+        </div>
+        <div class="arr y">→</div>
+        <div class="node" style="--nc:var(--pnk)" onclick="op('ops')">
+          <div class="sd r"></div>
+          <div class="ntitle">⚡ Operações</div>
+          <div class="nsub">Capacity, Monday, distribuição do time</div>
+          <div class="ntags"><span class="tag tr">🔴 Crítico</span><span class="tag tb">🤖 capacity</span></div>
+        </div>
+      </div>
+
+      <div class="ai">
+        <div class="ai-ico">🤖</div>
+        <div><strong>Prompt Bank — ativa neste ponto</strong>
+        "Diagnóstico de Briefing Incompleto" + "Análise de Capacity do Time" antes de abrir qualquer job em produção. Elimina retrabalho e sobrecarga invisível.</div>
+      </div>
+
+      <div class="div"><span>Entra em produção</span></div>
+
+      <div class="para">
+        <div class="node" style="--nc:#ff6b35" onclick="op('criacao')">
+          <div class="sd y"></div>
+          <div class="ntitle">🎨 Criação</div>
+          <div class="nsub">Conceito, copy, arte</div>
+          <div class="ntags"><span class="tag ty">🟡 revisão manual</span><span class="tag tb">🤖</span></div>
+        </div>
+        <div class="node" style="--nc:#00acc1" onclick="op('social')">
+          <div class="sd g"></div>
+          <div class="ntitle">📲 Social Media</div>
+          <div class="nsub">Cal., copy, aprovação</div>
+          <div class="ntags"><span class="tag tg">🟢 fluindo</span><span class="tag tb">🤖</span></div>
+        </div>
+        <div class="node" style="--nc:#e53935" onclick="op('trafego')">
+          <div class="sd g"></div>
+          <div class="ntitle">🚀 Tráfego</div>
+          <div class="nsub">Campanhas pagas, audiências</div>
+          <div class="ntags"><span class="tag tg">🟢 fluindo</span><span class="tag tb">🤖</span></div>
+        </div>
+        <div class="node" style="--nc:#7b1fa2" onclick="op('midia')">
+          <div class="sd y"></div>
+          <div class="ntitle">📡 Mídia</div>
+          <div class="nsub">Plano, veiculação, report</div>
+          <div class="ntags"><span class="tag ty">🟡 plano manual</span><span class="tag tb">🤖</span></div>
+        </div>
+        <div class="node" style="--nc:#f9a825" onclick="op('influenciadores')">
+          <div class="sd y"></div>
+          <div class="ntitle">⭐ Influenciadores</div>
+          <div class="nsub">Seleção, briefing, acompanham.</div>
+          <div class="ntags"><span class="tag ty">🟡 brief manual</span><span class="tag tb">🤖</span></div>
+        </div>
+        <div class="node" style="--nc:#ad1457" onclick="op('marketing')">
+          <div class="sd g"></div>
+          <div class="ntitle">📣 Marketing</div>
+          <div class="nsub">Aquisição, estratégia de conteúdo</div>
+          <div class="ntags"><span class="tag tg">🟢 fluindo</span><span class="tag tb">🤖</span></div>
+        </div>
+      </div>
+
+      <div class="div"><span>Entrega &amp; reporting</span></div>
+
+      <div class="frow">
+        <div class="node" style="--nc:var(--pnk)" onclick="op('projetos')">
+          <div class="sd r"></div>
+          <div class="ntitle">📋 Projetos</div>
+          <div class="nsub">Prazos, aprovações, escopo</div>
+          <div class="ntags"><span class="tag tr">🔴 Gargalo</span><span class="tag tb">🤖 escopo / risco</span></div>
+        </div>
+        <div class="arr r">→</div>
+        <div class="node" style="--nc:#3949ab" onclick="op('reporting')">
+          <div class="sd y"></div>
+          <div class="ntitle">📊 Reporting / BI</div>
+          <div class="nsub">Análise, relatório executivo</div>
+          <div class="ntags"><span class="tag ty">🟡 manual</span><span class="tag tb">🤖 análise</span></div>
+        </div>
+        <div class="arr y">→</div>
+        <div class="node" style="--nc:var(--y)" onclick="op('cliente')">
+          <div class="sd g"></div>
+          <div class="ntitle">✅ Entrega ao Cliente</div>
+          <div class="nsub">Apresentação, aprovação, próx. ciclo</div>
+          <div class="ntags"><span class="tag tg">🟢 fluindo</span><span class="tag tp">📌 Fase 2: QA</span></div>
+        </div>
+      </div>
+
+      <div class="sat-lbl">Projetos satélite — independentes, conectáveis na Fase 3</div>
+      <div class="sats">
+        <div class="sat" style="--nc:#3949ab">
+          <h5>📊 Dashboard Financeiro</h5>
+          <p>Rentabilidade por conta, job e área. Time financeiro toca de forma independente.</p>
+          <span class="ph">Fase 3 → integração</span>
+        </div>
+        <div class="sat" style="--nc:#d500f9">
+          <h5>🗂️ Banco por Cliente</h5>
+          <p>Brand guide, histórico de aprovações/reprovações, assets, QA automático pré-envio.</p>
+          <span class="ph">Fase 2 → em planejamento</span>
+        </div>
+        <div class="sat" style="--nc:var(--amb)">
+          <h5>👥 Dashboard de Capacity</h5>
+          <p>Visão em tempo real do time. Job só abre se capacity validado. Resolve o gargalo de Ops.</p>
+          <span class="ph">Fase 3 → pós Fase 2</span>
+        </div>
+        <div class="sat" style="--nc:var(--y)">
+          <h5>🤖 Prompt Bank</h5>
+          <p>Ativo. 11 áreas, prompts reais da Live. Ritual semanal. Fase 2: vinculado ao banco do cliente.</p>
+          <span class="ph">Fase 1 ✅ ativo</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ GARGALOS ══ -->
+  <div class="pv" id="pv-gargalos">
+    <div class="ggrid">
+      <div class="node" style="--nc:var(--pnk)" onclick="op('entrada')">
+        <div class="sd r"></div>
+        <div class="ntitle">🔴 Entrada de Job — sem padrão</div>
+        <div class="nsub" style="margin:6px 0 10px">Job abre no Monday manualmente por conta, sem verificar capacity, sem brief validado. Cada atendimento faz diferente.</div>
+        <div class="ntags"><span class="tag tb">🤖 Diagnóstico de Briefing</span><span class="tag tb">🤖 Análise de Capacity</span></div>
+      </div>
+      <div class="node" style="--nc:var(--pnk)" onclick="op('ops')">
+        <div class="sd r"></div>
+        <div class="ntitle">🔴 Ops — visibilidade zero do time</div>
+        <div class="nsub" style="margin:6px 0 10px">Ninguém vê o time inteiro. Job abre sem checar sobra. Burnout silencioso e prazo estourado.</div>
+        <div class="ntags"><span class="tag tyy">→ Fase 3: Dashboard Capacity</span></div>
+      </div>
+      <div class="node" style="--nc:var(--pnk)" onclick="op('projetos')">
+        <div class="sd r"></div>
+        <div class="ntitle">🔴 Projetos — manual e reativo</div>
+        <div class="nsub" style="margin:6px 0 10px">Sem marco intermediário o atraso aparece na hora do estouro. Follow-up de aprovação improvisado.</div>
+        <div class="ntags"><span class="tag tb">🤖 Escopo + Risco + Follow-up</span></div>
+      </div>
+      <div class="node" style="--nc:var(--amb)" onclick="op('reporting')">
+        <div class="sd y"></div>
+        <div class="ntitle">🟡 Reporting — do zero sempre</div>
+        <div class="nsub" style="margin:6px 0 10px">Cada relatório começa do zero. Horas gastas em formatação, não em análise real de dados.</div>
+        <div class="ntags"><span class="tag tb">🤖 Análise de Métricas</span></div>
+      </div>
+      <div class="node" style="--nc:var(--amb)" onclick="op('influenciadores')">
+        <div class="sd y"></div>
+        <div class="ntitle">🟡 Influenciadores — brief inconsistente</div>
+        <div class="nsub" style="margin:6px 0 10px">Cada atendimento faz o briefing diferente. Sem padrão de QA. Retrabalho alto.</div>
+        <div class="ntags"><span class="tag tb">🤖 Briefing Completo</span></div>
+      </div>
+      <div class="node" style="--nc:var(--amb)" onclick="op('criacao')">
+        <div class="sd y"></div>
+        <div class="ntitle">🟡 Criação — revisão sem fluxo</div>
+        <div class="nsub" style="margin:6px 0 10px">Sem checklist antes de ir ao cliente. Reprovações evitáveis acontecem por falta de processo.</div>
+        <div class="ntags"><span class="tag tb">🔄 Fluxo: Revisão Interna</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ IA ══ -->
+  <div class="pv" id="pv-ia">
+    <div class="ggrid">
+      <div class="node" style="--nc:#40c4ff">
+        <div class="ntitle">🤖 Agora — Prompt Bank ativo</div>
+        <div class="nsub" style="margin:6px 0 10px">Prompts reais prontos para usar hoje em todas as 11 áreas da ℓiⱴε.</div>
+        <div class="ntags" style="flex-wrap:wrap">
+          <span class="tag tb">Ops</span><span class="tag tb">Projetos</span><span class="tag tb">Criação</span>
+          <span class="tag tb">Social</span><span class="tag tb">Mídia</span><span class="tag tb">Influenc.</span>
+          <span class="tag tb">Tráfego</span><span class="tag tb">BI</span><span class="tag tb">Atend.</span>
+          <span class="tag tb">Marketing</span><span class="tag tb">Back Office</span>
+        </div>
+      </div>
+      <div class="node" style="--nc:#d500f9">
+        <div class="ntitle">📌 Fase 2 — Referência por cliente</div>
+        <div class="nsub" style="margin:6px 0 10px">Prompt consultará brand guide, histórico de aprovações e assets do cliente. QA automático antes de qualquer envio — sem loop humano no que é repetível.</div>
+        <div class="ntags"><span class="tag tp">Em planejamento</span></div>
+      </div>
+      <div class="node" style="--nc:var(--amb)">
+        <div class="ntitle">⚡ Fase 3 — Automação de fluxo</div>
+        <div class="nsub" style="margin:6px 0 10px">IA conectada ao Monday: abre job, verifica capacity, alerta sobre risco de prazo, gera relatório. O manual vira automático.</div>
+        <div class="ntags"><span class="tag ty">Futuro próximo</span></div>
+      </div>
+      <div class="node" style="--nc:var(--grn)">
+        <div class="ntitle">✅ O que NÃO muda com IA</div>
+        <div class="nsub" style="margin:6px 0 10px">Relação com cliente, decisão estratégica, direção criativa, liderança de conta. IA cuida do repetível e do manual. Humano cuida da cultura.</div>
+        <div class="ntags"><span class="tag tg">Sempre humano</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ ROADMAP ══ -->
+  <div class="pv" id="pv-roadmap">
+    <div style="display:flex;flex-direction:column;gap:8px;max-width:660px">
+      <div class="node" style="--nc:var(--y)">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div class="ntitle">✅ Fase 1 — Prompt Bank completo</div>
+          <span class="tag tyy">Ativo agora</span>
+        </div>
+        <div class="nsub" style="margin-top:6px">11 áreas, 17 prompts de base, busca rápida, filtros, exportação CSV. Ritual semanal: 1 prompt novo por área.</div>
+      </div>
+      <div class="node" style="--nc:#40c4ff">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div class="ntitle">🗺️ Fase 1.5 — Fluxograma interativo</div>
+          <span class="tag tb">Este documento</span>
+        </div>
+        <div class="nsub" style="margin-top:6px">Mapa visual com gargalos, onde a IA entra, projetos satélite e roadmap. Apresentável para sócios e clientes.</div>
+      </div>
+      <div class="node" style="--nc:#d500f9">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div class="ntitle">🗂️ Fase 2 — Banco por cliente + QA</div>
+          <span class="tag tp">Em planejamento</span>
+        </div>
+        <div class="nsub" style="margin-top:6px">Brand guide, histórico de aprovações/reprovações, assets, performance. QA automático antes de qualquer envio.</div>
+      </div>
+      <div class="node" style="--nc:var(--amb)">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div class="ntitle">👥 Fase 3A — Dashboard de Capacity</div>
+          <span class="tag ty">Pós Fase 2</span>
+        </div>
+        <div class="nsub" style="margin-top:6px">Visão em tempo real do time. Job só abre se capacity validado. Pode rodar em paralelo com o time financeiro.</div>
+      </div>
+      <div class="node" style="--nc:#3949ab">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div class="ntitle">📊 Fase 3B — Dashboard Financeiro</div>
+          <span class="tag tp">Paralelo · time financeiro</span>
+        </div>
+        <div class="nsub" style="margin-top:6px">Rentabilidade por conta, job e área. Independente. Fase final: conectar com Dashboard de Capacity.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- PANEL -->
+<div class="ov" id="ov" onclick="cp()"></div>
+<div class="panel" id="panel">
+  <button class="panel-x" onclick="cp()">✕</button>
+  <h3 id="ptitle">—</h3>
+  <div id="pbody"></div>
+</div>
+
+<script>
+const D={
+  entrada:{t:'📥 Entrada de Job',s:[
+    {l:'Situação atual',i:[
+      {t:'Como chega hoje',b:'Manual no Monday. Sem padrão entre contas. Brief pode estar incompleto, mal descrito ou ausente. Cada atendimento faz diferente.'},
+      {t:'Impacto real',b:'Job entra em produção sem brief validado → retrabalho → atraso → cliente insatisfeito → horas não faturadas.'}
+    ]},
+    {l:'🤖 IA entra aqui',i:[
+      {t:'Prompt: Diagnóstico de Briefing',b:'Antes de abrir o job, colar o brief. Em 30 segundos você sabe o que falta e qual o risco de começar agora.'},
+      {t:'Fluxo: Checklist de Abertura',b:'4 passos obrigatórios antes de qualquer job entrar em produção. No Prompt Bank.'}
+    ]},
+    {l:'📌 Fase 2',i:[{t:'QA cruzado com banco do cliente',b:'Brief cruzado com histórico do cliente: o que foi aprovado, reprovado, restrições de marca. Automático.'}]}
+  ]},
+  atendimento:{t:'🤝 Atendimento',s:[
+    {l:'Situação atual',i:[{t:'Status: atenção',b:'Funciona, mas depende do perfil de cada atendimento. Comunicação com cliente é inconsistente entre contas.'}]},
+    {l:'🤖 IA entra aqui',i:[
+      {t:'E-mails e follow-up',b:'Prompt gera e-mail de primeiro contato, follow-up de aprovação e status de job em 30 segundos. Padroniza sem robotizar.'},
+      {t:'Status Report para Cliente',b:'Transforma o status interno (às vezes caótico) numa atualização profissional. No Prompt Bank.'}
+    ]}
+  ]},
+  ops:{t:'⚡ Operações',s:[
+    {l:'Situação atual — GARGALO CRÍTICO',i:[
+      {t:'Sem visão de capacity',b:'Job abre por conta, individualmente. Ninguém vê o time inteiro. Resultado: sobrecarregado ao lado de quem tem espaço.'},
+      {t:'Abertura sem padrão',b:'Cada gestor abre job diferente. Sem nomenclatura, sem marco intermediário, sem brief aprovado linkado.'},
+      {t:'Tudo manual',b:'Follow-up, redistribuição, alerta de prazo — tudo na cabeça de uma pessoa. Não escala.'}
+    ]},
+    {l:'🤖 IA entra aqui',i:[
+      {t:'Prompt: Análise de Capacity',b:'Segunda cedo: cole lista do time + jobs da semana. O prompt mapeia quem está no limite e sugere redistribuição.'},
+      {t:'Fluxo: Abertura de Job',b:'Checklist obrigatório de 4 passos antes de qualquer job abrir em produção.'}
+    ]},
+    {l:'📌 Fase 3',i:[{t:'Dashboard de Capacity em tempo real',b:'Visão automática do time integrada ao Monday. Job só é criado se capacity validado.'}]}
+  ]},
+  projetos:{t:'📋 Projetos',s:[
+    {l:'Situação atual — GARGALO',i:[
+      {t:'Controle reativo',b:'Prazo gerenciado no feeling. Sem marco intermediário, o atraso aparece tarde. Risco identificado no estouro.'},
+      {t:'Follow-up no improviso',b:'Tom inconsistente — às vezes insistente demais, às vezes frouxo demais.'}
+    ]},
+    {l:'🤖 IA entra aqui',i:[
+      {t:'Escopo e Estimativa de Horas',b:'Cole o brief. Receba escopo, estimativa por área, cronograma e premissas. Kick-off 3x mais rápido.'},
+      {t:'Identificação de Riscos',b:'3 principais riscos com probabilidade, impacto e plano de mitigação. Preventivo, não reativo.'},
+      {t:'Follow-up sem soar chato',b:'Cobrança elegante com impacto claro e CTA. Funciona para e-mail e WhatsApp.'}
+    ]}
+  ]},
+  criacao:{t:'🎨 Criação',s:[
+    {l:'Situação atual',i:[{t:'Status: atenção',b:'Produção fluindo, mas revisão interna é ad hoc. Sem checklist antes de ir ao cliente. Reprovações evitáveis.'}]},
+    {l:'🤖 IA entra aqui',i:[
+      {t:'Conceito Criativo para Campanha',b:'3 conceitos radicalmente diferentes. Ponto de partida, não entrega final.'},
+      {t:'Fluxo: Revisão Interna',b:'4 etapas obrigatórias antes de qualquer material ir ao cliente.'}
+    ]},
+    {l:'📌 Fase 2',i:[{t:'QA com brand guide do cliente',b:'Cruza material com brand guide, histórico de reprovações e padrões do cliente. Alerta antes de mandar.'}]}
+  ]},
+  social:{t:'📲 Social Media',s:[
+    {l:'Situação atual',i:[{t:'Status: fluindo',b:'Área mais madura em uso de IA. Calendário e copy já usam prompts com regularidade.'}]},
+    {l:'🤖 IA entra aqui',i:[
+      {t:'Copy para Reels, carrossel, stories',b:'5 opções de legenda em segundos. Tom, CTA e hashtags por cliente.'},
+      {t:'Calendário Editorial Mensal',b:'Um mês de conteúdo estruturado em 10 minutos.'}
+    ]}
+  ]},
+  trafego:{t:'🚀 Tráfego',s:[
+    {l:'Situação atual',i:[{t:'Status: fluindo',b:'Boa adoção. Otimização recorrente no Meta e Google.'}]},
+    {l:'🤖 IA entra aqui',i:[{t:'Audiências para Meta Ads',b:'5 audiências segmentadas com justificativa estratégica e formato recomendado.'}]}
+  ]},
+  midia:{t:'📡 Mídia',s:[
+    {l:'Situação atual',i:[{t:'Status: atenção',b:'Plano de mídia ainda manual. Consome tempo que poderia ser de análise estratégica.'}]},
+    {l:'🤖 IA entra aqui',i:[{t:'Plano de Mídia Digital',b:'Mix de canais, % de budget, KPIs e cronograma em minutos. Ponto de partida para refinamento.'}]}
+  ]},
+  influenciadores:{t:'⭐ Influenciadores',s:[
+    {l:'Situação atual',i:[{t:'Status: atenção',b:'Briefing para criadores varia por conta. Sem padrão. Retrabalho alto.'}]},
+    {l:'🤖 IA entra aqui',i:[{t:'Briefing Completo para Influenciador',b:'7 seções cobrindo tudo que o criador precisa. Reduz dúvidas e retrabalho.'}]},
+    {l:'📌 Fase 2',i:[{t:'Banco de criadores por cliente',b:'Histórico de performance, formatos que funcionaram, criadores aprovados/reprovados.'}]}
+  ]},
+  marketing:{t:'📣 Marketing',s:[
+    {l:'Situação atual',i:[{t:'Status: fluindo',b:'Boa estratégia. Calendário editorial é o principal ponto de melhoria.'}]},
+    {l:'🤖 IA entra aqui',i:[{t:'Calendário Editorial Mensal',b:'Um mês com temas, formatos, copy e mix valor × conversão.'}]}
+  ]},
+  reporting:{t:'📊 Reporting / BI',s:[
+    {l:'Situação atual',i:[{t:'Status: atenção',b:'Relatório começa do zero toda vez. Horas gastas em formatação, não em análise.'}]},
+    {l:'🤖 IA entra aqui',i:[{t:'Análise de Métricas',b:'Cole os números. Receba relatório executivo com pontos positivos, oportunidades e recomendações com 🔴🟡🟢.'}]},
+    {l:'📌 Fase 2',i:[{t:'Report com histórico do cliente',b:'Cruza resultado atual com histórico. Identifica tendências automaticamente.'}]}
+  ]},
+  cliente:{t:'✅ Entrega ao Cliente',s:[
+    {l:'Situação atual',i:[{t:'Status: fluindo',b:'Entrega acontece, mas sem QA automatizado. Margem de erro existe.'}]},
+    {l:'📌 Fase 2',i:[{t:'QA automático pré-envio',b:'Sistema cruzará o material com brand guide, histórico e restrições do cliente. Alerta antes de ir.'}]}
+  ]}
+};
+
+function op(k){
+  const d=D[k];if(!d)return;
+  document.getElementById('ptitle').textContent=d.t;
+  document.getElementById('pbody').innerHTML=d.s.map(s=>`
+    <div class="psec">
+      <span class="plbl">${s.l}</span>
+      ${s.i.map(i=>`<div class="pitem"><strong>${i.t}</strong>${i.b}</div>`).join('')}
+    </div>`).join('');
+  document.getElementById('panel').classList.add('open');
+  document.getElementById('ov').classList.add('open');
+}
+function cp(){
+  document.getElementById('panel').classList.remove('open');
+  document.getElementById('ov').classList.remove('open');
+}
+function sv(id,btn){
+  document.querySelectorAll('.pv').forEach(v=>v.classList.remove('active'));
+  document.getElementById('pv-'+id).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')cp()});
+</script>
+</body>
+</html>
