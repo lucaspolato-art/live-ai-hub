@@ -244,25 +244,25 @@ nav{
         </div>
         <div class="node" style="--nc:#00acc1" onclick="op('social')">
           <div class="sd g"></div>
-          <div class="ntitle">📲 Social Media</div>
+          <div class="ntitle">📲 Social Media & Conteúdo</div>
           <div class="nsub">Cal., copy, aprovação</div>
           <div class="ntags"><span class="tag tg">🟢 fluindo</span><span class="tag tb">🤖</span></div>
         </div>
         <div class="node" style="--nc:#e53935" onclick="op('trafego')">
           <div class="sd g"></div>
-          <div class="ntitle">🚀 Tráfego</div>
+          <div class="ntitle">🚀 Tráfego (ads)</div>
           <div class="nsub">Campanhas pagas, audiências</div>
           <div class="ntags"><span class="tag tg">🟢 fluindo</span><span class="tag tb">🤖</span></div>
         </div>
         <div class="node" style="--nc:#7b1fa2" onclick="op('midia')">
           <div class="sd y"></div>
-          <div class="ntitle">📡 Mídia</div>
+          <div class="ntitle">📡 Mídia & Tráfego</div>
           <div class="nsub">Plano, veiculação, report</div>
           <div class="ntags"><span class="tag ty">🟡 plano manual</span><span class="tag tb">🤖</span></div>
         </div>
         <div class="node" style="--nc:#f9a825" onclick="op('influenciadores')">
           <div class="sd y"></div>
-          <div class="ntitle">⭐ Influenciadores</div>
+          <div class="ntitle">⭐ Influência</div>
           <div class="nsub">Seleção, briefing, acompanham.</div>
           <div class="ntags"><span class="tag ty">🟡 brief manual</span><span class="tag tb">🤖</span></div>
         </div>
@@ -501,22 +501,22 @@ const D={
     ]},
     {l:'📌 Fase 2',i:[{t:'QA com brand guide do cliente',b:'Cruza material com brand guide, histórico de reprovações e padrões do cliente. Alerta antes de mandar.'}]}
   ]},
-  social:{t:'📲 Social Media',s:[
+  social:{t:'📲 Social Media & Conteúdo',s:[
     {l:'Situação atual',i:[{t:'Status: fluindo',b:'Área mais madura em uso de IA. Calendário e copy já usam prompts com regularidade.'}]},
     {l:'🤖 IA entra aqui',i:[
       {t:'Copy para Reels, carrossel, stories',b:'5 opções de legenda em segundos. Tom, CTA e hashtags por cliente.'},
       {t:'Calendário Editorial Mensal',b:'Um mês de conteúdo estruturado em 10 minutos.'}
     ]}
   ]},
-  trafego:{t:'🚀 Tráfego',s:[
+  trafego:{t:'🚀 Tráfego (ads)',s:[
     {l:'Situação atual',i:[{t:'Status: fluindo',b:'Boa adoção. Otimização recorrente no Meta e Google.'}]},
     {l:'🤖 IA entra aqui',i:[{t:'Audiências para Meta Ads',b:'5 audiências segmentadas com justificativa estratégica e formato recomendado.'}]}
   ]},
-  midia:{t:'📡 Mídia',s:[
+  midia:{t:'📡 Mídia & Tráfego',s:[
     {l:'Situação atual',i:[{t:'Status: atenção',b:'Plano de mídia ainda manual. Consome tempo que poderia ser de análise estratégica.'}]},
     {l:'🤖 IA entra aqui',i:[{t:'Plano de Mídia Digital',b:'Mix de canais, % de budget, KPIs e cronograma em minutos. Ponto de partida para refinamento.'}]}
   ]},
-  influenciadores:{t:'⭐ Influenciadores',s:[
+  influenciadores:{t:'⭐ Influência',s:[
     {l:'Situação atual',i:[{t:'Status: atenção',b:'Briefing para criadores varia por conta. Sem padrão. Retrabalho alto.'}]},
     {l:'🤖 IA entra aqui',i:[{t:'Briefing Completo para Influenciador',b:'7 seções cobrindo tudo que o criador precisa. Reduz dúvidas e retrabalho.'}]},
     {l:'📌 Fase 2',i:[{t:'Banco de criadores por cliente',b:'Histórico de performance, formatos que funcionaram, criadores aprovados/reprovados.'}]}
@@ -566,15 +566,18 @@ const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tq
 
 // Mapeamento: valor no forms → node ID no fluxograma
 const AREA_MAP = {
-  'Atendimento':    'atendimento',
-  'Criação':        'criacao',
-  'Social Media':   'social',
-  'Mídia & Tráfego':'midia',
-  'BI & Insights':  'reporting',
-  'Influenciadores':'influenciadores',
-  'Operações':      'ops',
-  'Projetos':       'projetos',
-  'Back Office':    'backoffice'
+  'Atendimento':            'atendimento',
+  'Criação':                'criacao',
+  'Motion & Animação':      'criacao',   // agrupa em criação no fluxo
+  'Social Media & Conteúdo':'social',
+  'BI & Insights':          'reporting',
+  'Influência':             'influenciadores',
+  'Operações':              'ops',
+  'Operações & Projetos':   'ops',       // compatibilidade com versão anterior
+  'Projetos':               'projetos',
+  'TI':                     'backoffice',
+  'Produção':               'entrada',   // entra no fluxo na entrada do job
+  'Mídia & Tráfego':        'midia'
 };
 
 // Status definido pelo número de menções de gargalo na área
