@@ -566,18 +566,19 @@ const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tq
 
 // Mapeamento: valor no forms → node ID no fluxograma
 const AREA_MAP = {
-  'Atendimento':            'atendimento',
-  'Criação':                'criacao',
-  'Motion & Animação':      'criacao',   // agrupa em criação no fluxo
-  'Social Media & Conteúdo':'social',
-  'BI & Insights':          'reporting',
-  'Influência':             'influenciadores',
-  'Operações':              'ops',
-  'Operações & Projetos':   'ops',       // compatibilidade com versão anterior
-  'Projetos':               'projetos',
-  'TI':                     'backoffice',
-  'Produção':               'entrada',   // entra no fluxo na entrada do job
-  'Mídia & Tráfego':        'midia'
+  'Atendimento':             'atendimento',
+  'Criação':                 'criacao',
+  'Motion & Animação':       'criacao',
+  'Social Media & Conteúdo': 'social',
+  'Mídia & Tráfego':         'midia',
+  'BI & Insights':           'reporting',
+  'Influência':              'influenciadores',
+  'Operações':               'ops',
+  'Projetos':                'projetos',
+  'Produção':                'entrada',
+  'Pessoas & RH':            'backoffice',
+  'TI':                      'backoffice',
+  'Financeiro':              'backoffice'
 };
 
 // Status definido pelo número de menções de gargalo na área
